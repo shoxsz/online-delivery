@@ -1,5 +1,5 @@
-import { DataPipe } from "./DataPipe";
-import { Formatter } from "./Formatter";
+import { Type } from "../../utils/Type";
+import { FormatterAny } from "./Formatter";
 import { Guard } from "./Guard";
 import { HttpField } from "./HttpField";
 import { HttpMethod } from "./HttpMethod";
@@ -7,7 +7,7 @@ import { HttpMethod } from "./HttpMethod";
 export type ParameterMetadata = {
     field: HttpField,
     param?: string,
-    validator?: DataPipe<any, any>;
+    formatter?: Type<FormatterAny>;
 };
 
 export type ControllerParameter = {
@@ -24,9 +24,9 @@ export type ControllerRoute = {
 
     params: ControllerParameter;
 
-    guard?: Guard;
+    guard?: Type<Guard>;
 
-    formatter?: Formatter<any>;
+    outputFormatter?: Type<FormatterAny>;
 
     callback: (...args: any[]) => any;
 

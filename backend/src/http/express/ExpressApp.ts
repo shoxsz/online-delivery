@@ -2,10 +2,11 @@ import { HttpApp } from "../HttpApp";
 import * as express from "express";
 import { HttpMethod } from "../types/HttpMethod";
 import { ControllerData } from "../decorators/Controller";
-import { ControllerRoute } from "../types/ControllerRoute";
+import { ControllerRoute, ParameterMetadata } from "../types/ControllerRoute";
 import { HttpField } from "../types/HttpField";
 import * as body from "body-parser";
 import * as cors from "cors";
+import { Guard } from "../types/Guard";
 
 export class ExpressApp extends HttpApp {
 
@@ -26,28 +27,26 @@ export class ExpressApp extends HttpApp {
 
         return async (req: express.Request, res: express.Response, next) => {
 
-            const params = Object.keys(route.params).map((key) => {
+            const promises = Object.keys(route.params).map(async (key) => {
                 
                 const param = route.params[parseInt(key)];
 
-                switch(param.field) {
-                    case HttpField.BODY:
-                        return req.body;
-                    case HttpField.QUERY:
-                        return req.query;
-                    case HttpField.PARAM:
-                        return param.param ? req.params[param.param] : req.params;
-                    case HttpField.REQUEST:
-                        return req;
-                    case HttpField.RESPONSE:
-                        return res;
-                    case HttpField.HEADERS:
-                        return param.param ? req.headers[param.param] : req.headers;
-                    default:
-                        return null;
+                let data = this.getParamData(param, req, res);
+
+                if(param.formatter) {
+                    const formatter = new param.formatter;
+                    data = await formatter.format(data);
                 }
 
+                return data;
+
             });
+
+            const params = await Promise.all(promises);
+
+            if(route.guard) {
+                this.executeGuard(new route.guard(), req);
+            }
 
             const response = await this.wrapCall(() => handler(...params));
 
@@ -55,6 +54,36 @@ export class ExpressApp extends HttpApp {
 
         }
 
+    }
+
+    private async executeGuard(guard: Guard, req: any) {
+
+        const allow = await guard.allow(req);
+
+        if(!allow) {
+            throw new Error("Not Authorized");
+        }
+
+    }
+
+    private getParamData(param: ParameterMetadata, req: any, res: any) {
+
+        switch(param.field) {
+            case HttpField.BODY:
+                return req.body;
+            case HttpField.QUERY:
+                return req.query;
+            case HttpField.PARAM:
+                return param.param ? req.params[param.param] : req.params;
+            case HttpField.REQUEST:
+                return req;
+            case HttpField.RESPONSE:
+                return res;
+            case HttpField.HEADERS:
+                return param.param ? req.headers[param.param] : req.headers;
+            default:
+                return null;
+        }
     }
 
     protected async configureRoutes(): Promise<void> {

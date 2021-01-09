@@ -3,6 +3,15 @@ import { UserManager } from "../../core/UserManager";
 import { CONTROLLER } from "../decorators/Controller";
 import { POST, GET } from "../decorators/Methods";
 import { BODY } from "../decorators/Request";
+import { Formatter } from "../types/Formatter";
+
+class TestFormatter implements Formatter<any, string> {
+    
+    format(data: any) {
+        return "OI"
+    }
+
+}
 
 @CONTROLLER("users")
 export class UserController {
