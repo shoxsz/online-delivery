@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+    dbloja:
+        image: "mongo:latest"
+        volumes:
+            - "./db/loja/data/db-files:/data/db"
+        ports:
+            - 40000:27017
+        networks:
+            - backend
+
+networks:
+    backend:
+        driver: bridge
