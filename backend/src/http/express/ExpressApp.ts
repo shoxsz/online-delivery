@@ -50,6 +50,11 @@ export class ExpressApp extends HttpApp {
 
             const response = await this.wrapCall(() => handler(...params));
 
+            if(route.outputFormatter) {
+                const formatter = new route.outputFormatter();
+                response.data = await formatter.format(response.data);
+            }
+
             res.status(response.code).json(response.data);
 
         }

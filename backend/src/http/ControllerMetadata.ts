@@ -1,4 +1,7 @@
+import { Type } from "../utils/Type";
 import { ControllerRoute, ParameterMetadata } from "./types/ControllerRoute";
+import { Formatter, FormatterAny } from "./types/Formatter";
+import { Guard } from "./types/Guard";
 import { HttpMethod } from "./types/HttpMethod";
 
 export const getMetadata = (obj: any): ControllerMetadata => {
@@ -46,6 +49,18 @@ export class ControllerMetadata {
         const route = this.getMethodRoute(method);
 
         route.params[index] = param;
+
+    }
+
+    setRouteGuard(method: string, guard: Type<Guard>) {
+
+        this.getMethodRoute(method).guard = guard;
+
+    }
+
+    setRouteOutputFormatter(method: string, formatter: Type<FormatterAny>) {
+
+        this.getMethodRoute(method).outputFormatter = formatter;
 
     }
 
