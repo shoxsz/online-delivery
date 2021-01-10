@@ -1,23 +1,11 @@
 import { Type } from "../utils/Type";
 import { ControllerRoute, ParameterMetadata } from "./types/ControllerRoute";
-import { Formatter, FormatterAny } from "./types/Formatter";
+import { FormatterAny } from "./interfaces/Formatter";
 import { Guard } from "./types/Guard";
 import { HttpMethod } from "./types/HttpMethod";
 
-export const getMetadata = (obj: any): ControllerMetadata => {
-
-    if(!obj._metadata_) {
-        obj._metadata_ = new ControllerMetadata;
-    }
-
-    return obj._metadata_;
-
-}
-
-export const deleteMetadata = (obj: any) => {
-
-    delete obj._metadata_;
-
+export type ControllerRoutes = {
+    [method: string]: ControllerRoute
 }
 
 export class ControllerMetadata {

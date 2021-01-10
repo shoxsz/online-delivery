@@ -1,13 +1,11 @@
+import { getMetadata } from "../helpers/metadata";
 import { HttpMethod } from "../types/HttpMethod";
-import { getMetadata } from "../ControllerMetadata";
 
 const HttpMethodDecorator = (method: HttpMethod) => (path?: string) => {
 
     return (target: any, key: string, descriptor: PropertyDescriptor) => {
 
-        getMetadata(target);
-
-        target._metadata_.addRoute(key, path, method, descriptor.value);
+        getMetadata(target).addRoute(key, path, method, descriptor.value);
 
     }
 

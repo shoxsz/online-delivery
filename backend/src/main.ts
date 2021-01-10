@@ -1,8 +1,7 @@
-import { App } from "./core/App";
+import { Express } from "./http/express/Express";
 import { HttpApp } from "./http/HttpApp";
-import { ExpressApp } from "./http/express/ExpressApp";
 
-const app: HttpApp = new ExpressApp();
+const app: HttpApp = new HttpApp(new Express());
 
 app.initialize()
 .finally(

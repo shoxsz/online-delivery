@@ -1,15 +1,13 @@
 import { HttpField } from "../types/HttpField";
-import { getMetadata } from "../ControllerMetadata";
-import { FormatterAny } from "../types/Formatter";
+import { FormatterAny } from "../interfaces/Formatter";
 import { Type } from "../../utils/Type";
+import { getMetadata } from "../helpers/metadata";
 
 const Request = (field: HttpField, param?: string, formatter?: Type<FormatterAny>) => () => {
 
     return (target: any, methodName: string, index: number) => {
 
-        getMetadata(target);
-
-        target._metadata_.setRouteParameter(methodName, { field, param, formatter }, index);
+        getMetadata(target).setRouteParameter(methodName, { field, param, formatter }, index);;
 
     }
 

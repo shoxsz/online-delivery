@@ -1,5 +1,6 @@
 import { Type } from "../../utils/Type";
-import { ControllerMetadata, deleteMetadata, getMetadata } from "../ControllerMetadata";
+import { ControllerMetadata } from "../ControllerMetadata";
+import { deleteMetadata, getMetadata } from "../helpers/metadata";
 
 export type ControllerData = {
 

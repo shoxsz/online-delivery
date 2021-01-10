@@ -1,5 +1,5 @@
 import { App } from "../core/App";
-import { ControllerRoute } from "./types/ControllerRoute";
+import { ControllerRoute, ParameterMetadata } from "./types/ControllerRoute";
 import { HttpResponse } from "./types/HttpResponse";
 import { UserController } from "./controllers/UserController";
 import { SystemUserManager } from "../system/SystemUserManager";
@@ -9,10 +9,18 @@ import { AuthController } from "./controllers/AuthController";
 import { AuthWithToken } from "../system/AuthWithToken";
 import { TokenRepo } from "../system-repo/TokenRepo";
 import { ControllerData } from "./decorators/Controller";
+import { Type } from "../utils/Type";
+import { FormatterAny } from "./interfaces/Formatter";
+import { Guard } from "./interfaces/Guard";
+import { HttpFramework } from "./interfaces/HttpFramework";
 
-export abstract class HttpApp implements App {
+export class HttpApp implements App {
 
-    protected controllers: ControllerData[] = [];
+    private controllers: ControllerData[] = [];
+
+    constructor(
+        private readonly framework: HttpFramework
+    ) {}
 
     async initialize(): Promise<void> {
 
@@ -21,49 +29,95 @@ export abstract class HttpApp implements App {
         this.controllers.push(new UserController(new SystemUserManager(new MongoUserManagerRepo)) as any);
         this.controllers.push(new AuthController(new AuthWithToken(new TokenRepo)) as any);
 
+        console.log("Initializing HTTP Framework");
+        await this.framework.initFramework();
+
+        console.log("Configuring routes");
         this.wrapRoutes();
 
-        console.log("Initializing HTTP Framework");
-        await this.initFramework();
-
-        console.log("Configuring Routes");
-        await this.configureRoutes();
-
-        await this.listen(9000);
+        await this.framework.listen(9000);
         console.log("Server is UP");
 
     }
-
-    protected abstract initFramework(): Promise<void>;
-    protected abstract configureRoutes(): Promise<void>;
-    protected abstract listen(port: number): Promise<void>;
-    protected abstract handleRequest(controller: ControllerData, route: ControllerRoute): (...args: any[]) => any;
 
     private wrapRoutes() {
 
         this.controllers.forEach(controller => {
 
-            controller.controller.getRoutes().forEach(route => {
-                route.callback = this.handleRequest(controller, route);
+            const c = controller.controller;
+
+            const routes = c.getRoutes();
+
+            this.framework.configureController(c.route);
+
+            routes.forEach(route => {
+
+                const resolveParams = Object.values(route.params).map(param => {
+
+                    const resolve = this.framework.resolveParam(param);
+
+                    if(param.formatter) {
+                        const pResolve = resolve;
+                        const formatter = new param.formatter();
+
+                        return (...args: any[]) => {
+                            const rawData = pResolve(...args);
+                            return formatter.format(rawData);
+                        }
+                    }
+
+                    return resolve;
+
+                });
+
+                const guard = this.instantiateGuard(route.guard);
+                const formatter = this.instantiateFormatter(route.outputFormatter);
+
+                const mCallback = route.callback.bind(controller);
+                const callback = async (...args: any[]) => {
+
+                    try{ 
+                        if(guard) {
+                            await guard.allow(args[0]);
+                        }
+
+                        const params = resolveParams.map(param => param(...args));
+                        const result = await mCallback(...params);
+
+                        if(formatter) {
+                            return await formatter.format(result);
+                        }
+
+                        await this.framework.response(...[...args, result]);
+
+                    } catch(error) {
+
+                        await this.framework.exception(...[...args, error]);
+
+                    }
+
+                };
+
+                this.framework.configureRoute(c.route, route.path, callback);
+
             });
 
         });
 
     }
 
-    protected async wrapCall(callback: (...args: any[]) => any): Promise<HttpResponse> {
+    private instantiateGuard(guard?: Type<Guard>) {
 
-        try {
-            const data = await callback();
+        if(guard) {
+            return new guard();
+        }
 
-            return {
-                code: 200,
-                data
-            };
+    }
 
-        } catch(error) {
-            console.log(error);
-            return { code: 500, data: { statusCode: 500, error: { message: error.message } } };
+    private instantiateFormatter(formatter?: Type<FormatterAny>) {
+
+        if(formatter) {
+            return new formatter();
         }
 
     }

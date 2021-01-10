@@ -4,7 +4,7 @@ import { CONTROLLER } from "../decorators/Controller";
 import { FORMATTER } from "../decorators/Formatter";
 import { POST, GET } from "../decorators/Methods";
 import { BODY } from "../decorators/Request";
-import { Formatter, FormatterAny } from "../types/Formatter";
+import { Formatter, FormatterAny } from "../interfaces/Formatter";
 
 class TestFormatter implements Formatter<any, string> {
     
