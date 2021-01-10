@@ -1,8 +1,8 @@
 import { Type } from "../utils/Type";
 import { ControllerRoute, ParameterMetadata } from "./types/ControllerRoute";
 import { FormatterAny } from "./interfaces/Formatter";
-import { Guard } from "./types/Guard";
 import { HttpMethod } from "./types/HttpMethod";
+import { Guard } from "./interfaces/Guard";
 
 export type ControllerRoutes = {
     [method: string]: ControllerRoute

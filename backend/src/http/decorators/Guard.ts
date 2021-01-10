@@ -1,6 +1,6 @@
 import { Type } from "../../utils/Type";
 import { getMetadata } from "../helpers/metadata";
-import { Guard } from "../types/Guard";
+import { Guard } from "../interfaces/Guard";
 
 export const GUARD = (guard: Type<Guard>) => {
 

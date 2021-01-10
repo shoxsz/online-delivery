@@ -1,6 +1,6 @@
 import { Type } from "../../utils/Type";
 import { FormatterAny } from "../interfaces/Formatter";
-import { Guard } from "./Guard";
+import { Guard } from "../interfaces/Guard";
 import { HttpField } from "./HttpField";
 import { HttpMethod } from "./HttpMethod";
 

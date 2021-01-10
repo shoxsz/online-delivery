@@ -29,9 +29,9 @@ export class UserController {
         
     }
 
+    @FORMATTER(TestFormatter)
     @POST("teste")
-    @FORMATTER(TestFormatter2)
-    test(@BODY(TestFormatter) data: string) {
+    test(@BODY() data: any) {
         return data;
     }
 

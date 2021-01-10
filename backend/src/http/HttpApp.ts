@@ -13,6 +13,7 @@ import { Type } from "../utils/Type";
 import { FormatterAny } from "./interfaces/Formatter";
 import { Guard } from "./interfaces/Guard";
 import { HttpFramework } from "./interfaces/HttpFramework";
+import { ControllerMetadata } from "./ControllerMetadata";
 
 export class HttpApp implements App {
 
@@ -52,51 +53,13 @@ export class HttpApp implements App {
 
             routes.forEach(route => {
 
-                const resolveParams = Object.values(route.params).map(param => {
-
-                    const resolve = this.framework.resolveParam(param);
-
-                    if(param.formatter) {
-                        const pResolve = resolve;
-                        const formatter = new param.formatter();
-
-                        return (...args: any[]) => {
-                            const rawData = pResolve(...args);
-                            return formatter.format(rawData);
-                        }
-                    }
-
-                    return resolve;
-
-                });
+                const resolveParams = this.resolveRouteParams(route);
 
                 const guard = this.instantiateGuard(route.guard);
                 const formatter = this.instantiateFormatter(route.outputFormatter);
 
                 const mCallback = route.callback.bind(controller);
-                const callback = async (...args: any[]) => {
-
-                    try{ 
-                        if(guard) {
-                            await guard.allow(args[0]);
-                        }
-
-                        const params = resolveParams.map(param => param(...args));
-                        const result = await mCallback(...params);
-
-                        if(formatter) {
-                            return await formatter.format(result);
-                        }
-
-                        await this.framework.response(...[...args, result]);
-
-                    } catch(error) {
-
-                        await this.framework.exception(...[...args, error]);
-
-                    }
-
-                };
+                const callback = this.createRouteCallback(mCallback, resolveParams, guard, formatter);
 
                 this.framework.configureRoute(c.route, route.path, callback);
 
@@ -104,6 +67,59 @@ export class HttpApp implements App {
 
         });
 
+    }
+
+    private resolveRouteParams(route: ControllerRoute) {
+
+        return Object.values(route.params).map(param => {
+
+            let resolve = this.framework.resolveParam(param);
+            resolve = this.applyFormatter(resolve, param.formatter);
+            return resolve;
+
+        });
+    }
+
+    private applyFormatter(resolve: (...args: any[]) => any, formatter?: Type<FormatterAny>) {
+
+        if(!formatter) {
+            return resolve;
+        }
+
+        const pResolve = resolve;
+        const formatterInstance = new formatter();
+
+        return (...args: any[]) => {
+            const rawData = pResolve(...args);
+            return formatterInstance.format(rawData);
+        }
+    }
+
+    private createRouteCallback(callback: (...args: any[]) => any, resolveParams: any[], guard?: Guard, formatter?: FormatterAny) {
+
+        return async (...args: any[]) => {
+
+            try{ 
+                if(guard) {
+                    await guard.allow(args[0]);
+                }
+
+                const params = resolveParams.map(param => param(...args));
+                let result = await callback(...params);
+
+                if(formatter) {
+                    result = await formatter.format(result);
+                }
+
+                await this.framework.response(...[...args, result]);
+
+            } catch(error) {
+
+                await this.framework.exception(...[...args, error]);
+
+            }
+
+        }
     }
 
     private instantiateGuard(guard?: Type<Guard>) {
