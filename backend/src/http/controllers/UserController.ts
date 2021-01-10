@@ -2,9 +2,12 @@ import { CreateUser } from "../../core/types/CreateUser";
 import { UserManager } from "../../core/UserManager";
 import { CONTROLLER } from "../decorators/Controller";
 import { FORMATTER } from "../decorators/Formatter";
+import { GUARD } from "../decorators/Guard";
 import { POST, GET } from "../decorators/Methods";
 import { BODY } from "../decorators/Request";
 import { Formatter, FormatterAny } from "../interfaces/Formatter";
+import { Guard } from "../interfaces/Guard";
+import { HttpHeaders } from "../types/HttpHeaders";
 
 class TestFormatter implements Formatter<any, string> {
     
@@ -22,6 +25,16 @@ class TestFormatter2 implements FormatterAny {
 
 }
 
+class TestGuard implements Guard {
+
+    allow(headers: HttpHeaders): boolean {
+
+        return headers.authorization === "123456";
+
+    }
+
+}
+
 @CONTROLLER("users")
 export class UserController {
 
@@ -29,9 +42,10 @@ export class UserController {
         
     }
 
-    @FORMATTER(TestFormatter)
+    @GUARD(TestGuard)
+    @FORMATTER(TestFormatter2)
     @POST("teste")
-    test(@BODY() data: any) {
+    test(@BODY(TestFormatter) data: any) {
         return data;
     }
 
@@ -43,7 +57,6 @@ export class UserController {
         return this.users.create(create);
 
     }
-
     
     @GET("me")
     getMe() {

@@ -20,6 +20,25 @@ export class Express implements HttpFramework {
 
     }
 
+    getFieldFromRequest(field: HttpField, req: express.Request, res: express.Response): any {
+
+        switch(field) {
+            case HttpField.BODY:
+                return req.body;
+            case HttpField.HEADERS:
+                return req.headers;
+            case HttpField.PARAM:
+                return req.params;
+            case HttpField.QUERY:
+                return req.query;
+            case HttpField.REQUEST:
+                return req;
+            case HttpField.RESPONSE:
+                return res;
+        }
+
+    }
+
     resolveParam(param: ParameterMetadata): (...args: any[]) => any {
 
         switch(param.field) {
@@ -60,7 +79,7 @@ export class Express implements HttpFramework {
     }
 
     async exception(request: any, response: any, next: any, error: any) {
-        console.log(error);
+        
         response.status(505).json(error);
 
     }

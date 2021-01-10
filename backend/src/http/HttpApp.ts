@@ -14,6 +14,7 @@ import { FormatterAny } from "./interfaces/Formatter";
 import { Guard } from "./interfaces/Guard";
 import { HttpFramework } from "./interfaces/HttpFramework";
 import { ControllerMetadata } from "./ControllerMetadata";
+import { HttpField } from "./types/HttpField";
 
 export class HttpApp implements App {
 
@@ -101,7 +102,11 @@ export class HttpApp implements App {
 
             try{ 
                 if(guard) {
-                    await guard.allow(args[0]);
+                    const headers = this.framework.getFieldFromRequest(HttpField.HEADERS, ...args);
+                    const result = await guard.allow(headers);
+                    if(!result) {
+                        throw new Error("The Guard on this route didn't allow the request to be forwarded");
+                    }
                 }
 
                 const params = resolveParams.map(param => param(...args));
@@ -115,7 +120,7 @@ export class HttpApp implements App {
 
             } catch(error) {
 
-                await this.framework.exception(...[...args, error]);
+                await this.framework.exception(...[...args, error.message]);
 
             }
 
