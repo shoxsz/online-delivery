@@ -11,9 +11,9 @@ export class UserController {
     constructor(readonly users: UserManager) {}
 
     @POST()
-    createUser(@BODY(JSONValidator) create: CreateUserVal): CreateUserVal {
+    createUser(@BODY(JSONValidator) create: CreateUserVal) {
 
-        return create;
+        return this.users.create(create);
 
     }
 
