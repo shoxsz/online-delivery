@@ -6,6 +6,8 @@ import * as cors from "cors";
 import { paramFromBody, paramFromHeaders, paramFromParam, paramFromQuery } from "./params";
 import { HttpFramework } from "../interfaces/HttpFramework";
 import { BaseError } from "../../errors/BaseError";
+import { HttpMethod } from "../types/HttpMethod";
+import { POST } from "../decorators/Methods";
 
 export class Express implements HttpFramework {
 
@@ -65,11 +67,29 @@ export class Express implements HttpFramework {
 
     }
 
-    configureRoute(controllerRoute: string, route: string, method: (...args: any[]) => any) {
+    configureRoute(controllerRoute: string, route: string, http: HttpMethod, method: (...args: any[]) => any) {
 
         const router = this.getControllerRouter(controllerRoute);
 
-        router.use(this.formatPath(route), method);
+        switch(http) {
+            case HttpMethod.POST:
+                router.post(this.formatPath(route), method);
+                break;
+            case HttpMethod.PUT:
+                router.put(this.formatPath(route), method);
+                break;
+            case HttpMethod.GET:
+                router.get(this.formatPath(route), method);
+                break;
+            case HttpMethod.PATCH:
+                router.patch(this.formatPath(route), method);
+                break;
+            case HttpMethod.DELETE:
+                router.delete(this.formatPath(route), method);
+                break;
+            default:
+                console.log("Invalid http method: " + http);
+        }
 
     }
 

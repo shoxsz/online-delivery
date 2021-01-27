@@ -18,6 +18,8 @@ const Request = (field: HttpField, param?: string, formatter?: Type<FormatterAny
 
 export const BODY = (formatter?: Type<FormatterAny>) => Request(HttpField.BODY, null, formatter)();
 
-export const QUERY = Request(HttpField.QUERY);
+export const QUERY = (formatter?: Type<FormatterAny>) => Request(HttpField.QUERY)();
 
 export const PARAM = (param?: string) => Request(HttpField.PARAM, param)();
+
+export const REQUEST = (formatter?: Type<FormatterAny>) => Request(HttpField.REQUEST)();

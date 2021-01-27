@@ -11,7 +11,7 @@ export class UserError extends BaseError {
 export class UserEmailInUse extends UserError {
 
     constructor(email: string) {
-        super(`O email informado, ${email}, já está em uso`);
+        super("", { email: `O email informado, ${email}, já está em uso` });
     }
 
 }

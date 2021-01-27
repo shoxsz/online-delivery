@@ -60,7 +60,7 @@ export class HttpApp implements App {
                 const mCallback = route.callback.bind(controller);
                 const callback = this.createRouteCallback(mCallback, resolveParams, route.returnType, guard, formatter);
 
-                this.framework.configureRoute(c.route, route.path, callback);
+                this.framework.configureRoute(c.route, route.path, route.method, callback);
 
             });
 
@@ -115,7 +115,7 @@ export class HttpApp implements App {
                 await this.framework.response(...[...args, result]);
 
             } catch(error) {
-
+                
                 await this.framework.exception(...[...args, error]);
 
             }

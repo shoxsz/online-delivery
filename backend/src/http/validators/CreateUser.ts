@@ -1,5 +1,5 @@
 import { Expose, Type } from "class-transformer";
-import { IsArray, IsDate, IsEmail, IsIn, IsNumber, isNumber, IsNumberString, IsString, MaxLength, MinLength, ValidateNested } from "class-validator";
+import { IsArray, IsDate, IsDateString, IsEmail, IsIn, IsNumber, isNumber, IsNumberString, IsOptional, IsString, MaxLength, MinLength, ValidateNested } from "class-validator";
 
 export class CreateUserAddressVal {
 
@@ -15,6 +15,7 @@ export class CreateUserAddressVal {
 
     @MinLength(2)
     @MaxLength(2)
+    @Expose()
     state: string;
 
     @MinLength(1)
@@ -33,6 +34,7 @@ export class CreateUserAddressVal {
 
     @MinLength(1)
     @MaxLength(1000)
+    @IsOptional()
     @Expose()
     complement?: string;
 
@@ -85,6 +87,7 @@ export class CreateUserVal {
     phone: CreateUserPhoneVal[];
 
     @IsDate()
+    @Type(() => Date)
     @Expose()
     birthdate: Date;
 
