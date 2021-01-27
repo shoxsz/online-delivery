@@ -105,7 +105,7 @@ export class HttpApp implements App {
                     }
                 }
 
-                const params = resolveParams.map(param => param(...args));
+                const params = await Promise.all(resolveParams.map(param => param(...args)));
                 let result = await callback(...params);
 
                 if(formatter) {
