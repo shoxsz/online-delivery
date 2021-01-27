@@ -6,7 +6,7 @@ export type CreateUserAddress = {
     street: string;
     neighborhood: string;
     number: number;
-    complement: string;
+    complement?: string;
 
 }
 
@@ -23,8 +23,8 @@ export type CreateUser = {
     name: string;
     email: string;
     password: string;
-    address: [CreateUserAddress];
-    phone: [CreateUserPhone];
+    address: CreateUserAddress[];
+    phone: CreateUserPhone[];
     birthdate: Date;
 
 }

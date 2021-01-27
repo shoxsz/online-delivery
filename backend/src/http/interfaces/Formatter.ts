@@ -1,6 +1,8 @@
-export interface Formatter <T, O> {
+import { ParamData } from "../types/ParamData";
 
-    format(data: T): Promise<O> | O;
+export interface Formatter <I, O> {
+
+    format(data: I, param: ParamData): Promise<O> | O;
 
 }
 

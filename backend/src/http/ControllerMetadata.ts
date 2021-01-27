@@ -22,12 +22,13 @@ export class ControllerMetadata {
         return this.route;
     }
 
-    addRoute(method: string, path: string, httpMethod: HttpMethod, callback: (...args: any[]) => any) {
+    addRoute(method: string, path: string, httpMethod: HttpMethod, returnType: Type<any>, callback: (...args: any[]) => any) {
 
         const route = this.getMethodRoute(method);
 
         route.path = path;
         route.method = httpMethod;
+        route.returnType = returnType;
         route.callback = callback;
 
     }
@@ -60,6 +61,7 @@ export class ControllerMetadata {
                 path: null,
                 method: null,
                 params: {},
+                returnType: null,
                 callback: null
             };
 

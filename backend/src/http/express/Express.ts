@@ -5,6 +5,7 @@ import * as body from "body-parser";
 import * as cors from "cors";
 import { paramFromBody, paramFromHeaders, paramFromParam, paramFromQuery } from "./params";
 import { HttpFramework } from "../interfaces/HttpFramework";
+import { BaseError } from "../../errors/BaseError";
 
 export class Express implements HttpFramework {
 
@@ -78,7 +79,7 @@ export class Express implements HttpFramework {
 
     }
 
-    async exception(request: any, response: any, next: any, error: any) {
+    async exception(request: any, response: any, next: any, error: BaseError) {
         
         response.status(505).json(error);
 

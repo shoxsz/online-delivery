@@ -3,9 +3,8 @@ import { CreateUser } from "../core/types/CreateUser";
 import { UserManager } from "../core/UserManager";
 import { User } from "../entities/User";
 import { UserFactory } from "../entities/UserFactory";
-import { Validation } from "../entities/Validation";
 import { ValidationFactory } from "../entities/ValidationFactory";
-import { EmailAlreadyInUse } from "../errors/EmailAlreadyInUse";
+import { UserExceptions } from "../errors/User";
 import { Encrypt } from "../utils/Encrypt";
 import { UserManagerRepo } from "./UserManagerRepo";
 
@@ -34,7 +33,7 @@ export class SystemUserManager implements UserManager {
         const found = await this.users.findByEmail(email, myId);
 
         if(found) {
-            throw new EmailAlreadyInUse();
+            throw UserExceptions.emailInUse(email);
         }
 
     }

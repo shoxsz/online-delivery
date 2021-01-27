@@ -1,4 +1,6 @@
-class StoreException extends Error {
+import { BaseError } from "./BaseError";
+
+class StoreException extends BaseError {
     constructor(message: string) {
         super(message);
     }

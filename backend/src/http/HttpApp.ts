@@ -1,6 +1,5 @@
 import { App } from "../core/App";
-import { ControllerRoute, ParameterMetadata } from "./types/ControllerRoute";
-import { HttpResponse } from "./types/HttpResponse";
+import { ControllerRoute } from "./types/ControllerRoute";
 import { UserController } from "./controllers/UserController";
 import { SystemUserManager } from "../system/SystemUserManager";
 import { MongoUserManagerRepo } from "../system-repo/MongoUserManagerRepo";
@@ -13,7 +12,6 @@ import { Type } from "../utils/Type";
 import { FormatterAny } from "./interfaces/Formatter";
 import { Guard } from "./interfaces/Guard";
 import { HttpFramework } from "./interfaces/HttpFramework";
-import { ControllerMetadata } from "./ControllerMetadata";
 import { HttpField } from "./types/HttpField";
 
 export class HttpApp implements App {
@@ -60,7 +58,7 @@ export class HttpApp implements App {
                 const formatter = this.instantiateFormatter(route.outputFormatter);
 
                 const mCallback = route.callback.bind(controller);
-                const callback = this.createRouteCallback(mCallback, resolveParams, guard, formatter);
+                const callback = this.createRouteCallback(mCallback, resolveParams, route.returnType, guard, formatter);
 
                 this.framework.configureRoute(c.route, route.path, callback);
 
@@ -75,28 +73,26 @@ export class HttpApp implements App {
         return Object.values(route.params).map(param => {
 
             let resolve = this.framework.resolveParam(param);
-            resolve = this.applyFormatter(resolve, param.formatter);
+            if(param.formatter) {
+                resolve = this.applyFormatter(resolve, param.type, param.formatter);
+            }
             return resolve;
 
         });
+
     }
 
-    private applyFormatter(resolve: (...args: any[]) => any, formatter?: Type<FormatterAny>) {
-
-        if(!formatter) {
-            return resolve;
-        }
-
+    private applyFormatter(resolve: (...args: any[]) => any, type: Type<any>, formatter: Type<FormatterAny>) {
         const pResolve = resolve;
         const formatterInstance = new formatter();
 
         return (...args: any[]) => {
             const rawData = pResolve(...args);
-            return formatterInstance.format(rawData);
+            return formatterInstance.format(rawData, { type });
         }
     }
 
-    private createRouteCallback(callback: (...args: any[]) => any, resolveParams: any[], guard?: Guard, formatter?: FormatterAny) {
+    private createRouteCallback(callback: (...args: any[]) => any, resolveParams: any[], type: Type<any>, guard?: Guard, formatter?: FormatterAny) {
 
         return async (...args: any[]) => {
 
@@ -113,14 +109,14 @@ export class HttpApp implements App {
                 let result = await callback(...params);
 
                 if(formatter) {
-                    result = await formatter.format(result);
+                    result = await formatter.format(result, { type });
                 }
 
                 await this.framework.response(...[...args, result]);
 
             } catch(error) {
 
-                await this.framework.exception(...[...args, error.message]);
+                await this.framework.exception(...[...args, error]);
 
             }
 

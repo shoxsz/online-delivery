@@ -4,8 +4,10 @@ import { HttpMethod } from "../types/HttpMethod";
 const HttpMethodDecorator = (method: HttpMethod) => (path?: string) => {
 
     return (target: any, key: string, descriptor: PropertyDescriptor) => {
+        
+        const returnType = Reflect.getMetadata("design:returntype", target, key);
 
-        getMetadata(target).addRoute(key, path, method, descriptor.value);
+        getMetadata(target).addRoute(key, path, method, returnType, descriptor.value);
 
     }
 

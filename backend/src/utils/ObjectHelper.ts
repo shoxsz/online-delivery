@@ -12,6 +12,15 @@ export class ObjectHelper {
 
     }
 
+    static merge<T, O>(object: T, other: O): T | O {
+
+        return {
+            ...object,
+            ...other
+        };
+
+    }
+
     static appendPrefix<T>(object: T, prefix: string) {
 
         const newObj: any = {};

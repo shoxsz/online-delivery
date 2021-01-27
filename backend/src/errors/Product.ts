@@ -1,4 +1,6 @@
-export class ProductError extends Error {
+import { BaseError } from "./BaseError";
+
+export class ProductError extends BaseError {
 
     constructor(message: string) {
         super(message);

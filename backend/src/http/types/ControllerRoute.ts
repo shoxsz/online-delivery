@@ -7,6 +7,7 @@ import { HttpMethod } from "./HttpMethod";
 export type ParameterMetadata = {
     field: HttpField,
     param?: string,
+    type: Type<any>,
     formatter?: Type<FormatterAny>;
 };
 
@@ -23,6 +24,8 @@ export type ControllerRoute = {
     method: HttpMethod;
 
     params: ControllerParameter;
+
+    returnType: Type<any>;
 
     guard?: Type<Guard>;
 
