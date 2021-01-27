@@ -1,4 +1,4 @@
-import { UserManager } from "../../core/UserManager";
+import { Manager } from "../../core/SystemManager";
 import { CONTROLLER } from "../decorators/Controller";
 import { FORMATTER } from "../decorators/Formatter";
 import { GUARD } from "../decorators/Guard";
@@ -12,13 +12,11 @@ import { JSONValidator } from "./JSONValidator";
 @CONTROLLER("users")
 export class UserController {
 
-    constructor(readonly users: UserManager) {}
-
     @POST()
     @FORMATTER(UserFormatter)
     createUser(@BODY(JSONValidator) create: CreateUserVal) {
 
-        return this.users.create(create);
+        return Manager.users.create(create);
 
     }
 
@@ -27,7 +25,9 @@ export class UserController {
     @GUARD(Authenticator)
     getInfo(@REQUEST() request: any) {
 
-        return this.users.findById(request.user.id);
+        
+
+        return request.user;
 
     }
 

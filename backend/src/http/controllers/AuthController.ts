@@ -1,4 +1,4 @@
-import { Auth } from "../../core/Auth";
+import { Manager } from "../../core/SystemManager";
 import { CONTROLLER } from "../decorators/Controller";
 import { POST } from "../decorators/Methods";
 import { BODY } from "../decorators/Request";
@@ -6,16 +6,12 @@ import { BODY } from "../decorators/Request";
 @CONTROLLER("auth")
 export class AuthController {
 
-    constructor(
-        private readonly auth: Auth
-    ) {}
-
     @POST()
     authenticate(
         @BODY() auth: any
     ) {
 
-        return this.auth.authenticate(auth.username, auth.password);
+        return Manager.authenticator.authenticate(auth.username, auth.password);
 
     }
 
@@ -23,7 +19,7 @@ export class AuthController {
     deauthenticate(
         @BODY() auth: any
     ) {
-        return this.auth.destroyAuth(auth.token);
+        return Manager.authenticator.destroyAuth(auth.token);
     }
 
 }

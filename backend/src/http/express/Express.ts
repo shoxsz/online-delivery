@@ -23,6 +23,25 @@ export class Express implements HttpFramework {
 
     }
 
+    setFieldToRequest(field: HttpField | string, value: any, req: express.Request, res: express.Response) {
+        switch(field) {
+            case HttpField.BODY:
+                req.body = value;
+                break;
+            case HttpField.HEADERS:
+                req.headers = value;
+                break;
+            case HttpField.PARAM:
+                req.params = value;
+                break;
+            case HttpField.QUERY:
+                req.query = value;
+                break;
+            default:
+                req[field] = value;
+        }
+    }
+
     getFieldFromRequest(field: HttpField, req: express.Request, res: express.Response): any {
 
         switch(field) {

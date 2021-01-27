@@ -1,10 +1,11 @@
+import { Manager } from "../../../core/SystemManager";
 import { Guard } from "../../interfaces/Guard";
 import { HttpHeaders } from "../../types/HttpHeaders";
 import { InvalidToken } from "../errors/InvalidToken";
 
 export class Authenticator implements Guard {
 
-    allow(headers: HttpHeaders) {
+    async allow(headers: HttpHeaders) {
 
         const auth = headers.authorization;
 
@@ -22,7 +23,13 @@ export class Authenticator implements Guard {
             throw new InvalidToken(auth);
         }
 
-        return false;
+        const token = await Manager.authenticator.authorize(parts[1]);
+
+        if(token == null) {
+            throw new InvalidToken(auth);
+        }
+
+        return { user: token.user, token };
 
     }
 

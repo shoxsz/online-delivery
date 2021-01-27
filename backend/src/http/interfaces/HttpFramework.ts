@@ -6,6 +6,8 @@ export interface HttpFramework {
 
     initFramework(): Promise<void>;
 
+    setFieldToRequest(field: HttpField | string, value: any, ...args: any[]);
+
     getFieldFromRequest(field: HttpField, ...args: any[]): any;
 
     resolveParam(param: ParameterMetadata): (...args: any[]) => any;

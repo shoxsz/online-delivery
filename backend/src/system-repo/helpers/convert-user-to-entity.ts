@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import { AuthToken } from "../../entities/AuthToken";
 import { User, UserAddress, UserPhone } from "../../entities/User";
 import { Validation } from "../../entities/Validation";
 import { UserSchemaType } from "../UserSchema";
@@ -16,6 +17,10 @@ export const convertUserToEntity = (found: UserSchemaType & Document) => {
 
     if(found.address && found.address.length) {
         found.address = found.address.map(address => convertToEntity(UserAddress, address));
+    }
+
+    if(found.tokens && found.tokens.length) {
+        found.tokens = found.tokens.map(token => convertToEntity(AuthToken, token));
     }
 
     return convertToEntity(User, found);

@@ -13,6 +13,7 @@ import { FormatterAny } from "./interfaces/Formatter";
 import { Guard } from "./interfaces/Guard";
 import { HttpFramework } from "./interfaces/HttpFramework";
 import { HttpField } from "./types/HttpField";
+import { Manager, CreateSystem, Instantiator } from "../core/SystemManager";
 
 export class HttpApp implements App {
 
@@ -22,12 +23,14 @@ export class HttpApp implements App {
         private readonly framework: HttpFramework
     ) {}
 
-    async initialize(): Promise<void> {
+    async initialize(instantiator: Instantiator): Promise<void> {
 
         await ConnectMongo("mongodb://127.0.0.1:40000");
+        
+        CreateSystem(instantiator);
 
-        this.controllers.push(new UserController(new SystemUserManager(new MongoUserManagerRepo)) as any);
-        this.controllers.push(new AuthController(new AuthWithToken(new TokenRepo)) as any);
+        this.controllers.push(new UserController() as any);
+        this.controllers.push(new AuthController() as any);
 
         console.log("Initializing HTTP Framework");
         await this.framework.initFramework();
@@ -103,6 +106,11 @@ export class HttpApp implements App {
                     if(!result) {
                         throw new Error("The Guard on this route didn't allow the request to be forwarded");
                     }
+
+                    if(typeof result === "object") {
+                        Object.keys(result).map(key => this.framework.setFieldToRequest(key, result[key], ...args));
+                    }
+
                 }
 
                 const params = await Promise.all(resolveParams.map(param => param(...args)));
@@ -115,7 +123,7 @@ export class HttpApp implements App {
                 await this.framework.response(...[...args, result]);
 
             } catch(error) {
-                
+
                 await this.framework.exception(...[...args, error]);
 
             }
