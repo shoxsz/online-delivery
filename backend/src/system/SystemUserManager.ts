@@ -28,6 +28,20 @@ export class SystemUserManager implements UserManager {
         
     }
 
+    async update(user: User, update: CreateUser): Promise<User> {
+
+        if(user.email != update.email) {
+            await this.assertEmailUnique(update.email);
+        }
+
+        const updatedUser = UserFactory.updateFromCreate(user, update);
+
+        await this.users.update(user.id, updatedUser);
+
+        return this.users.findById(user.id);
+
+    }
+
     private async assertEmailUnique(email: string, myId?: string) {
 
         const found = await this.users.findByEmail(email, myId);
@@ -35,26 +49,6 @@ export class SystemUserManager implements UserManager {
         if(found) {
             throw UserExceptions.emailInUse(email);
         }
-
-    }
-
-    async update(user: User, userData: Partial<User>): Promise<User> {
-
-        if(userData.email) {
-            await this.assertEmailUnique(userData.email, user.id);
-            userData.validations = [ValidationFactory.forEmail(userData.email)];
-        }
-
-        if(userData.password) {
-            userData.passwordSalt = Encrypt.randomHex128();
-            userData.password = Encrypt.encrypt(userData.password, userData.passwordSalt);
-        }
-
-        Entities.updateDefault(userData);
-
-        await this.users.update(user.id, userData);
-
-        return this.users.findById(user.id);
 
     }
 

@@ -1,6 +1,7 @@
 import { Auth } from "../core/Auth";
 import { AuthToken } from "../entities/AuthToken";
 import { AuthTokenFactory } from "../entities/AuthTokenFactory";
+import { AuthExceptions } from "../errors/Auth";
 import { Encrypt } from "../utils/Encrypt";
 import { AuthRepo } from "./AuthRepo";
 
@@ -15,11 +16,11 @@ export class AuthWithToken implements Auth {
         const user = await this.authRepo.userByEmail(username);
 
         if(!user) {
-            return null;
+            throw AuthExceptions.invalidCredentials();
         }
 
         if(!Encrypt.testEncription(user.passwordSalt, user.password, password)) {
-            return null;
+            throw AuthExceptions.invalidCredentials();
         }
 
         const authToken = AuthTokenFactory.createFromUser(user.id);

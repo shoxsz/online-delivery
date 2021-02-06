@@ -14,8 +14,9 @@ export class Entities {
 
     }
 
-    static updateDefault(entity: Partial<BaseEntity>) {
+    static updateDefault<T extends BaseEntity>(entity: T): T {
         entity.updatedAt = DateTime.today();
+        return entity;
     }
 
 }

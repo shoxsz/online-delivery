@@ -60,7 +60,7 @@ export class CreateUserPhoneVal {
 export class CreateUserVal {
 
     @MinLength(1)
-    @MaxLength(30)
+    @MaxLength(100)
     @Expose()
     name: string;
 

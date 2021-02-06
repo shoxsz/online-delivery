@@ -5,7 +5,7 @@ export interface UserManager {
 
     create(user: CreateUser): Promise<User>;
 
-    update(user: User, userData: Partial<User>): Promise<User>;
+    update(user: User, create: CreateUser): Promise<User>;
 
     delete(user: User): Promise<User>;
 

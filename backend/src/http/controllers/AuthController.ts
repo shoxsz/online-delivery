@@ -1,12 +1,17 @@
 import { Manager } from "../../core/SystemManager";
 import { CONTROLLER } from "../decorators/Controller";
-import { POST } from "../decorators/Methods";
-import { BODY } from "../decorators/Request";
+import { FORMATTER } from "../decorators/Formatter";
+import { GUARD } from "../decorators/Guard";
+import { DELETE, POST } from "../decorators/Methods";
+import { BODY, REQUEST } from "../decorators/Request";
+import { AuthTokenFormatter } from "./formatters/AuthTokenFormatter";
+import { Authenticator } from "./guards/Authenticator";
 
 @CONTROLLER("auth")
 export class AuthController {
 
     @POST()
+    @FORMATTER(AuthTokenFormatter)
     authenticate(
         @BODY() auth: any
     ) {
@@ -15,11 +20,12 @@ export class AuthController {
 
     }
 
-    @POST()
-    deauthenticate(
-        @BODY() auth: any
+    @DELETE()
+    @GUARD(Authenticator)
+    async deauthenticate(
+        @REQUEST() request
     ) {
-        return Manager.authenticator.destroyAuth(auth.token);
+        await Manager.authenticator.destroyAuth(request.user.tokens?.[0]?.token);
     }
 
 }

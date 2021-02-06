@@ -16,3 +16,4 @@ const HttpMethodDecorator = (method: HttpMethod) => (path?: string) => {
 export const GET = HttpMethodDecorator(HttpMethod.GET);
 export const POST = HttpMethodDecorator(HttpMethod.POST);
 export const PUT = HttpMethodDecorator(HttpMethod.PUT);
+export const DELETE = HttpMethodDecorator(HttpMethod.DELETE);

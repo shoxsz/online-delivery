@@ -14,6 +14,8 @@ import { Guard } from "./interfaces/Guard";
 import { HttpFramework } from "./interfaces/HttpFramework";
 import { HttpField } from "./types/HttpField";
 import { Manager, CreateSystem, Instantiator } from "../core/SystemManager";
+import { BaseError } from "../errors/BaseError";
+import { InternalServerError } from "./controllers/errors/InvalidError";
 
 export class HttpApp implements App {
 
@@ -123,6 +125,12 @@ export class HttpApp implements App {
                 await this.framework.response(...[...args, result]);
 
             } catch(error) {
+
+                if(!(error instanceof BaseError)) {
+                    console.log("UNHANDLED ERROR");
+                    console.log(error);
+                    error = new InternalServerError();
+                }
 
                 await this.framework.exception(...[...args, error]);
 
