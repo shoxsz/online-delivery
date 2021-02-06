@@ -6,6 +6,6 @@ export interface SystemImageRepo {
 
     delete(userId: string, imageId: string): Promise<void>;
 
-    getById(userId: string, imageId: string): Promise<Image>;
+    getById(imageId: string): Promise<Image>;
 
 }

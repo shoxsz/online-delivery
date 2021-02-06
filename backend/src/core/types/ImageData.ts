@@ -1,4 +1,3 @@
-import { ImageFormat } from "./ImageFormat";
 
 export type ImageData = {
 
@@ -6,7 +5,7 @@ export type ImageData = {
 
     data?: Buffer;
 
-    format: ImageFormat;
+    format: string;
 
     size: number;
 

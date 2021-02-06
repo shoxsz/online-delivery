@@ -20,10 +20,9 @@ export class MongoSystemImageRepo implements SystemImageRepo {
 
     }
 
-    async getById(userId: string, _id: string) {
+    async getById(_id: string) {
         
         const found  = await this.images.findOne({
-            userId,
             _id
         });
 

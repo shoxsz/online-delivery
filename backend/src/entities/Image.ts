@@ -1,4 +1,3 @@
-import { ImageFormat } from "../core/types/ImageFormat";
 import { BaseEntity } from "./BaseEntity";
 
 export class Image extends BaseEntity {
@@ -9,7 +8,7 @@ export class Image extends BaseEntity {
 
     data?: Buffer;
 
-    format: ImageFormat;
+    format: string;
 
     size: number;
 

@@ -8,6 +8,6 @@ export interface ImageManager {
 
     delete(user: User, imageId: string): Promise<Image>;
 
-    getById(user: User, imageId: string): Promise<Image>;
+    getById(imageId: string): Promise<Image>;
 
 }

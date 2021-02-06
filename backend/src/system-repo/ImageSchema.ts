@@ -1,5 +1,4 @@
 import * as mongoose from "mongoose";
-import { ImageFormat } from "../core/types/ImageFormat";
 
 export type ImageSchemaType = {
     
@@ -10,7 +9,7 @@ export type ImageSchemaType = {
     userId: string;
     repoKey: string;
     name: string;
-    format: ImageFormat;
+    format: string;
     size: number;
 }
 
@@ -23,7 +22,7 @@ export const ImageSchema = new mongoose.Schema({
     userId: String,
     repoKey: String,
     name: String,
-    format: { enum: [Object.values(ImageFormat)] },
+    format: String,
     size: Number,
 
 });

@@ -1,7 +1,7 @@
 import { UPLOAD_SINGLE } from "../decorators/Upload";
-import { REQUEST } from "../decorators/Request";
+import { PARAM, REQUEST } from "../decorators/Request";
 import { CONTROLLER } from "../decorators/Controller";
-import { POST } from "../decorators/Methods";
+import { DELETE, GET, POST } from "../decorators/Methods";
 import { Manager } from "../../core/SystemManager";
 import { GUARD } from "../decorators/Guard";
 import { Authenticator } from "./guards/Authenticator";
@@ -18,6 +18,26 @@ export class ImageController {
     ) {
 
         return Manager.images.create(imageData.user, imageData.image);
+
+    }
+
+    @DELETE("/:id")
+    @GUARD(Authenticator)
+    delete(
+        @PARAM("id") id: string,
+        @REQUEST() request
+    ) {
+
+        return Manager.images.delete(request.user, id);
+
+    }
+
+    @GET("/:id")
+    get(
+        @PARAM("id") id: string
+    ) {
+
+        return Manager.images.getById(id);
 
     }
 

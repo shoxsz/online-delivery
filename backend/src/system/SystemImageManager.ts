@@ -26,7 +26,7 @@ export class SystemImageManager implements ImageManager {
 
     async delete(user: User, imageId: string) {
         
-        const image = await this.getById(user, imageId);
+        const image = await this.getById(imageId);
 
         await this.imageRepo.delete(user.id, imageId);
         await this.imageStore.remove(image.repoKey);
@@ -35,9 +35,9 @@ export class SystemImageManager implements ImageManager {
 
     }
 
-    async getById(user: User, imageId: string) {
+    async getById(imageId: string) {
         
-        const found = await this.imageRepo.getById(user.id, imageId);
+        const found = await this.imageRepo.getById(imageId);
 
         if(!found) {
             throw ImageExceptions.notFound(imageId);
