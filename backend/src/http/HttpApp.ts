@@ -18,6 +18,7 @@ import { BaseError } from "../errors/BaseError";
 import { InternalServerError } from "./controllers/errors/InvalidError";
 import { StoreController } from "./controllers/StoreController";
 import { ProductController } from "./controllers/ProductController";
+import { ImageController } from "./controllers/ImageController";
 
 export class HttpApp implements App {
 
@@ -37,6 +38,7 @@ export class HttpApp implements App {
         this.controllers.push(new AuthController() as any);
         this.controllers.push(new StoreController() as any);
         this.controllers.push(new ProductController() as any);
+        this.controllers.push(new ImageController() as any);
 
         console.log("Initializing HTTP Framework");
         await this.framework.initFramework();
@@ -69,7 +71,7 @@ export class HttpApp implements App {
                 const mCallback = route.callback.bind(controller);
                 const callback = this.createRouteCallback(mCallback, resolveParams, route.returnType, guard, formatter);
 
-                this.framework.configureRoute(c.route, route.path, route.method, callback);
+                this.framework.configureRoute(c.route, route.path, route.method, callback, route.upload);
 
             });
 

@@ -1,5 +1,5 @@
 import * as express from "express";
-import { ParameterMetadata } from "../types/ControllerRoute";
+import { ControllerRouteUpload, ParameterMetadata } from "../types/ControllerRoute";
 import { HttpField } from "../types/HttpField";
 import * as body from "body-parser";
 import * as cors from "cors";
@@ -7,14 +7,18 @@ import { paramFromBody, paramFromHeaders, paramFromParam, paramFromQuery } from 
 import { HttpFramework } from "../interfaces/HttpFramework";
 import { BaseError } from "../../errors/BaseError";
 import { HttpMethod } from "../types/HttpMethod";
-import { POST } from "../decorators/Methods";
+import * as multer from "multer";
 
 export class Express implements HttpFramework {
 
     private app: express.Express;
     private routers: { [route: string]: express.Router } = {};
 
+    private multerInstance: multer.Multer;
+
     async initFramework(): Promise<void> {
+
+        this.multerInstance = multer();
 
         this.app = express();
 
@@ -86,29 +90,56 @@ export class Express implements HttpFramework {
 
     }
 
-    configureRoute(controllerRoute: string, route: string, http: HttpMethod, method: (...args: any[]) => any) {
+    configureRoute(controllerRoute: string, route: string, http: HttpMethod, method: (...args: any[]) => any, upload?: ControllerRouteUpload) {
 
         const router = this.getControllerRouter(controllerRoute);
 
+        const middlewares: ((...args: any[]) => any)[] = [];
+
+        if(upload) {
+            middlewares.push(this.getUploadMiddleware(upload));
+        }
+
+        middlewares.push(method);
+
         switch(http) {
             case HttpMethod.POST:
-                router.post(this.formatPath(route), method);
+                router.post(this.formatPath(route), middlewares);
                 break;
             case HttpMethod.PUT:
-                router.put(this.formatPath(route), method);
+                router.put(this.formatPath(route), middlewares);
                 break;
             case HttpMethod.GET:
-                router.get(this.formatPath(route), method);
+                router.get(this.formatPath(route), middlewares);
                 break;
             case HttpMethod.PATCH:
-                router.patch(this.formatPath(route), method);
+                router.patch(this.formatPath(route), middlewares);
                 break;
             case HttpMethod.DELETE:
-                router.delete(this.formatPath(route), method);
+                router.delete(this.formatPath(route), middlewares);
                 break;
             default:
                 console.log("Invalid http method: " + http);
         }
+
+    }
+
+    private getUploadMiddleware(upload: ControllerRouteUpload) {
+
+        if(upload.all) {
+            return this.multerInstance.any();
+        }
+
+        if(upload.many) {
+            const fields = upload.many.map(name => ({ name, maxCount: 1 }));
+            return this.multerInstance.fields(fields);
+        }
+
+        if(upload.single) {
+            return this.multerInstance.single(upload.single);
+        }
+
+        console.log("WARNING: UPLOAD MIDDLEWARE DEFINED WITH NO VALID OPTION");
 
     }
 

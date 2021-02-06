@@ -1,5 +1,5 @@
 import { Type } from "../utils/Type";
-import { ControllerRoute, ParameterMetadata } from "./types/ControllerRoute";
+import { ControllerRoute, ControllerRouteUpload, ParameterMetadata } from "./types/ControllerRoute";
 import { FormatterAny } from "./interfaces/Formatter";
 import { HttpMethod } from "./types/HttpMethod";
 import { Guard } from "./interfaces/Guard";
@@ -30,6 +30,14 @@ export class ControllerMetadata {
         route.method = httpMethod;
         route.returnType = returnType;
         route.callback = callback;
+
+    }
+
+    setRouteUpload(method: string, upload: ControllerRouteUpload) {
+
+        const route = this.getMethodRoute(method);
+
+        route.upload = upload;
 
     }
 

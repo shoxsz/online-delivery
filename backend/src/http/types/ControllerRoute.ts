@@ -17,6 +17,12 @@ export type ControllerParameter = {
 
 }
 
+export type ControllerRouteUpload = {
+    all?: boolean;
+    single?: string;
+    many?: string[];
+}
+
 export type ControllerRoute = {
 
     path: string;
@@ -30,6 +36,8 @@ export type ControllerRoute = {
     guard?: Type<Guard>;
 
     outputFormatter?: Type<FormatterAny>;
+
+    upload?: ControllerRouteUpload;
 
     callback: (...args: any[]) => any;
 

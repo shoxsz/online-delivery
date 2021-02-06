@@ -13,6 +13,8 @@ export class Image extends BaseEntity {
 
     size: number;
 
+    repoKey: string;
+
     constructor(partial?: Partial<Image>) {
         super(partial);
         Object.assign(this, partial);

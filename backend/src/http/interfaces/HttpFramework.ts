@@ -1,4 +1,4 @@
-import { ParameterMetadata } from "../types/ControllerRoute";
+import { ControllerRouteUpload, ParameterMetadata } from "../types/ControllerRoute";
 import { HttpField } from "../types/HttpField";
 import { HttpMethod } from "../types/HttpMethod";
 
@@ -14,7 +14,7 @@ export interface HttpFramework {
 
     configureController(controller: string): void;
 
-    configureRoute(controller: string, route: string, http: HttpMethod, method: (...args: any[]) => any): void;
+    configureRoute(controller: string, route: string, http: HttpMethod, method: (...args: any[]) => any, upload?: ControllerRouteUpload): void;
 
     response(...args: any[]): Promise<void>;
 
