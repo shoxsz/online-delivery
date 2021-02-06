@@ -28,11 +28,10 @@ export class StoreFactory {
 
     }
 
-    static update(user: User, update: CreateStore) {
+    static update(store: Store, update: CreateStore & { id: string }) {
 
-        const store: Partial<Store> = { ...update };
-
-        store.userId = user.id;
+        store.name = update.name;
+        store.description = update.description;
         store.updatedAt = DateTime.today();
 
         return store;

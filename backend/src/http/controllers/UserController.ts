@@ -7,8 +7,8 @@ import { DELETE, GET, POST, PUT } from "../decorators/Methods";
 import { BODY, REQUEST } from "../decorators/Request";
 import { CreateUserVal } from "../validators/CreateUser";
 import { UserFormatter } from "./formatters/UserFormatter";
+import { JSONValidator } from "./formatters/JSONValidator";
 import { Authenticator } from "./guards/Authenticator";
-import { JSONValidator } from "./JSONValidator";
 
 @CONTROLLER("users")
 export class UserController {

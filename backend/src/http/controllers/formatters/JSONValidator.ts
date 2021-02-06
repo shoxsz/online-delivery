@@ -1,9 +1,9 @@
 import { plainToClass } from "class-transformer";
 import { validate, ValidationError } from "class-validator";
-import { FieldErrors, ValidationExceptions } from "../../errors/ValidationException";
-import { ObjectHelper } from "../../utils/ObjectHelper";
-import { Formatter } from "../interfaces/Formatter";
-import { ParamData } from "../types/ParamData";
+import { FieldErrors, ValidationExceptions } from "../../../errors/ValidationException";
+import { ObjectHelper } from "../../../utils/ObjectHelper";
+import { Formatter } from "../../interfaces/Formatter";
+import { ParamData } from "../../types/ParamData";
 
 export class JSONValidator implements Formatter<any, any> {
 

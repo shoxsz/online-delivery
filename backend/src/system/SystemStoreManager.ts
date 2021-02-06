@@ -26,11 +26,13 @@ export class SystemStoreManager implements StoreManager {
 
     async update(user: User, storeId: string, update: CreateStore): Promise<Store> {
         
-        const store = StoreFactory.update(user, update);
+        const store = await this.getById(user, storeId);
 
-        await this.stores.update(user.id, storeId, store);
+        const updatedStore = StoreFactory.update(store, { ...update, id: storeId });
 
-        return this.getById(user, storeId);
+        await this.stores.update(user.id, storeId, updatedStore);
+
+        return updatedStore;
 
     }
 
@@ -52,8 +54,14 @@ export class SystemStoreManager implements StoreManager {
 
     }
 
-    delete(user: User, storeId: string): Promise<Store> {
-        return null;
+    async delete(user: User, storeId: string): Promise<Store> {
+        
+        const store = await this.getById(user, storeId);
+
+        this.stores.delete(user.id, storeId);
+
+        return store;
+
     }
 
 }

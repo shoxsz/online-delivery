@@ -11,4 +11,6 @@ export interface SystemStoreRepo {
     getById(userId: string, storeId: string): Promise<Store>;
 
     search(userId: string, search: StoreSearch): Promise<SearchResult<Store>>;
+
+    delete(userId: string, storeId: string): Promise<void>;
 }

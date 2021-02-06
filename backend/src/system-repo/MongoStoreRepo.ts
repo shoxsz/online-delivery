@@ -26,9 +26,7 @@ export class MongoStoreRepo implements SystemStoreRepo {
                 _id: storeId,
                 userId
             },
-            {
-                store
-            }
+            store
         );
 
         return up.nModified > 0;
@@ -77,6 +75,15 @@ export class MongoStoreRepo implements SystemStoreRepo {
             data: found.map(store => this.toStore(store)),
             count
         };
+
+    }
+
+    async delete(userId: string, _id: string) {
+
+        await this.stores.deleteOne({
+            userId,
+            _id
+        })
 
     }
 
