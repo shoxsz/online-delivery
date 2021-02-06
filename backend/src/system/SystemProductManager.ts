@@ -30,23 +30,21 @@ export class SystemProductManager implements ProductManager {
 
     async update(user: User, productId: string, create: CreateProduct): Promise<Product> {
 
-        const product = await this.getById(user, productId);
+        const product = await this.getById(user, create.storeId, productId);
 
         await this.assertStoreExists(user.id, create.storeId);
 
-        ObjectHelper.copyFields(product, create, ["name", "description", "price", "storeId"]);
-
-        product.updatedAt = DateTime.today();
+        const updatedProduct = ProductFactory.update(product, create);
         
         await this.productsRepo.update(productId, product);
 
-        return product;
+        return updatedProduct;
 
     }
 
-    async delete(user: User, productId: string): Promise<Product> {
+    async delete(user: User, storeId: string, productId: string): Promise<Product> {
 
-        const product = await this.getById(user, productId);
+        const product = await this.getById(user, storeId, productId);
 
         await this.productsRepo.deleteById(productId);
 
@@ -54,9 +52,9 @@ export class SystemProductManager implements ProductManager {
 
     }
 
-    async getById(user: User, productId: string): Promise<Product> {
+    async getById(user: User, storeId: string, productId: string): Promise<Product> {
 
-        const found = await this.productsRepo.getById(user.id, productId);
+        const found = await this.productsRepo.getById(user.id, storeId, productId);
 
         if(!found) {
             throw ProductExceptions.notFound(productId);

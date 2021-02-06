@@ -8,7 +8,7 @@ export interface SystemProductRepo {
 
     update(id: string, product: Partial<Product>): Promise<any>;
 
-    getById(userId: string, id: string): Promise<Product>;
+    getById(userId: string, storeId: string, id: string): Promise<Product>;
 
     search(storeId: string, search: ProductSearch): Promise<SearchResult<Product>>;
 

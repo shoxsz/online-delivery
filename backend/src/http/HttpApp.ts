@@ -17,6 +17,7 @@ import { Manager, CreateSystem, Instantiator } from "../core/SystemManager";
 import { BaseError } from "../errors/BaseError";
 import { InternalServerError } from "./controllers/errors/InvalidError";
 import { StoreController } from "./controllers/StoreController";
+import { ProductController } from "./controllers/ProductController";
 
 export class HttpApp implements App {
 
@@ -35,6 +36,7 @@ export class HttpApp implements App {
         this.controllers.push(new UserController() as any);
         this.controllers.push(new AuthController() as any);
         this.controllers.push(new StoreController() as any);
+        this.controllers.push(new ProductController() as any);
 
         console.log("Initializing HTTP Framework");
         await this.framework.initFramework();

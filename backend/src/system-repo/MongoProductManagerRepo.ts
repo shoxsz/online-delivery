@@ -31,17 +31,19 @@ export class MongoSystemProductRepo implements SystemProductRepo {
 
     }
 
-    async getById(userId: string, id: string): Promise<Product> {
+    async getById(userId: string, storeId: string, _id: string): Promise<Product> {
         
-        const foundModel = await this.model.findById(id);
-
-        if(!foundModel) {
+        if(!(await this.storeExists(userId, storeId))) {
             return null;
         }
 
-        const store = await this.storeExists(userId, foundModel.storeId);
-        if(!store) {
-            return null
+        const foundModel = await this.model.findOne({
+            storeId,
+            _id
+        });
+
+        if(!foundModel) {
+            return null;
         }
 
         return convertToEntity(Product, foundModel);
@@ -52,7 +54,8 @@ export class MongoSystemProductRepo implements SystemProductRepo {
         
         const found = await this.model.find(
             {
-                storeId
+                storeId,
+                name: { $regex: `${search.name}.*`, $options: 'i' }
             },
             null,
             {

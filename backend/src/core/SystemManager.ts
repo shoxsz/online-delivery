@@ -1,13 +1,15 @@
 import { UserManager } from "./UserManager";
 import { Auth } from "./Auth";
 import { StoreManager } from "./StoreManager";
+import { ProductManager } from "./ProductManager";
 
 class SystemManager {
 
     constructor(
         readonly authenticator: Auth,
         readonly users: UserManager,
-        readonly store: StoreManager
+        readonly store: StoreManager,
+        readonly product: ProductManager
     ) {}
 
 }
@@ -22,6 +24,8 @@ export interface Instantiator {
 
     createStore(): StoreManager;
 
+    createProduct(): ProductManager;
+
 }
 
 export const CreateSystem = (instantiator: Instantiator) => {
@@ -29,7 +33,8 @@ export const CreateSystem = (instantiator: Instantiator) => {
     Manager = new SystemManager(
         instantiator.createAuth(),
         instantiator.createUsers(),
-        instantiator.createStore()
+        instantiator.createStore(),
+        instantiator.createProduct()
     );
 
 }

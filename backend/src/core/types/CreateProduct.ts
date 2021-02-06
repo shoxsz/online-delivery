@@ -1,4 +1,8 @@
+import { ProductIngredient, ProductVariation } from "../../entities/Product";
+
 export type CreateProduct = {
+
+    storeId: string;
 
     name: string;
 
@@ -6,6 +10,8 @@ export type CreateProduct = {
 
     price: number;
 
-    storeId: string;
+    ingredients:  ProductIngredient[];
+
+    variations: { [variation: string]: ProductVariation[] };
 
 }

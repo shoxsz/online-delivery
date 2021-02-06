@@ -1,8 +1,10 @@
 import { Instantiator } from "../core/SystemManager";
+import { MongoSystemProductRepo } from "../system-repo/MongoProductManagerRepo";
 import { MongoStoreRepo } from "../system-repo/MongoStoreRepo";
 import { MongoUserManagerRepo } from "../system-repo/MongoUserManagerRepo";
 import { TokenRepo } from "../system-repo/TokenRepo";
 import { AuthWithToken } from "./AuthWithToken";
+import { SystemProductManager } from "./SystemProductManager";
 import { SystemStoreManager } from "./SystemStoreManager";
 import { SystemUserManager } from "./SystemUserManager";
 
@@ -18,6 +20,10 @@ export class SystemInstantiator implements Instantiator {
 
     createStore() {
         return new SystemStoreManager(new MongoStoreRepo());
+    }
+
+    createProduct() {
+        return new SystemProductManager(new MongoSystemProductRepo());
     }
 
 }

@@ -3,7 +3,9 @@ import { ParameterMetadata } from "../types/ControllerRoute";
 const paramFromField = (param: ParameterMetadata, field: string) => {
 
     if(param.param) {
+
         return (request: any, response: any) => request[field][param.param]
+        
     } else {
 
         return (request: any, response: any) => request[field]
