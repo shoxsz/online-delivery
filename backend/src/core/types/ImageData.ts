@@ -10,4 +10,6 @@ export type ImageData = {
 
     format: ImageFormat;
 
+    size: number;
+
 }

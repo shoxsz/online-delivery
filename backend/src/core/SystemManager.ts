@@ -2,6 +2,7 @@ import { UserManager } from "./UserManager";
 import { Auth } from "./Auth";
 import { StoreManager } from "./StoreManager";
 import { ProductManager } from "./ProductManager";
+import { ImageManager } from "./ImageManager";
 
 class SystemManager {
 
@@ -9,7 +10,8 @@ class SystemManager {
         readonly authenticator: Auth,
         readonly users: UserManager,
         readonly store: StoreManager,
-        readonly product: ProductManager
+        readonly product: ProductManager,
+        readonly images: ImageManager
     ) {}
 
 }
@@ -26,6 +28,8 @@ export interface Instantiator {
 
     createProduct(): ProductManager;
 
+    createImage(): ImageManager;
+
 }
 
 export const CreateSystem = (instantiator: Instantiator) => {
@@ -34,7 +38,8 @@ export const CreateSystem = (instantiator: Instantiator) => {
         instantiator.createAuth(),
         instantiator.createUsers(),
         instantiator.createStore(),
-        instantiator.createProduct()
+        instantiator.createProduct(),
+        instantiator.createImage()
     );
 
 }
