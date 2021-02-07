@@ -77,4 +77,10 @@ export class CreateProductVal {
     @Type(() => CreateProductVariationTypeVal)
     @Expose()
     variations: CreateProductVariationTypeVal;
+
+    @IsString()
+    @MinLength(1)
+    @MaxLength(100)
+    @Expose()
+    icon: string;
 }

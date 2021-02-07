@@ -1,11 +1,9 @@
-import { Entities } from "../core/Entities";
 import { CreateUser } from "../core/types/CreateUser";
 import { UserManager } from "../core/UserManager";
 import { User } from "../entities/User";
 import { UserFactory } from "../entities/UserFactory";
 import { ValidationFactory } from "../entities/ValidationFactory";
 import { UserExceptions } from "../errors/User";
-import { Encrypt } from "../utils/Encrypt";
 import { UserManagerRepo } from "./UserManagerRepo";
 
 export class SystemUserManager implements UserManager {

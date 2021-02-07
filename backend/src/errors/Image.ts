@@ -12,10 +12,21 @@ export class ImageNotFoundError extends ImageError {
     }
 }
 
+export class ImagesNotFoundError extends ImageError {
+    constructor(ids: string[]) {
+        super(`As imagens ${ids.join(",")} não foram encontradas`);
+    }
+}
+
+
 export class ImageExceptions {
 
     static notFound(id: string) {
         return new ImageNotFoundError(id);
+    }
+
+    static notFounds(ids: string[]) {
+        return new ImagesNotFoundError(ids);
     }
 
 }

@@ -1,19 +1,14 @@
 import { App } from "../core/App";
 import { ControllerRoute } from "./types/ControllerRoute";
 import { UserController } from "./controllers/UserController";
-import { SystemUserManager } from "../system/SystemUserManager";
-import { MongoUserManagerRepo } from "../system-repo/MongoUserManagerRepo";
-import { ConnectMongo } from "../system-repo";
 import { AuthController } from "./controllers/AuthController";
-import { AuthWithToken } from "../system/AuthWithToken";
-import { TokenRepo } from "../system-repo/TokenRepo";
 import { ControllerData } from "./decorators/Controller";
 import { Type } from "../utils/Type";
 import { FormatterAny } from "./interfaces/Formatter";
 import { Guard } from "./interfaces/Guard";
 import { HttpFramework } from "./interfaces/HttpFramework";
 import { HttpField } from "./types/HttpField";
-import { Manager, CreateSystem, Instantiator } from "../core/SystemManager";
+import { CreateSystem, Instantiator } from "../core/SystemManager";
 import { BaseError } from "../errors/BaseError";
 import { InternalServerError } from "./controllers/errors/InvalidError";
 import { StoreController } from "./controllers/StoreController";
@@ -30,7 +25,7 @@ export class HttpApp implements App {
 
     async initialize(instantiator: Instantiator): Promise<void> {
 
-        await ConnectMongo("mongodb://127.0.0.1:40000");
+        await instantiator.initialize();
         
         CreateSystem(instantiator);
 

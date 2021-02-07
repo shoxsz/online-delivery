@@ -14,4 +14,6 @@ export type CreateProduct = {
 
     variations: { [variation: string]: ProductVariation[] };
 
+    icon: string;
+
 }

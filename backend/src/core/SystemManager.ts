@@ -20,6 +20,8 @@ export let Manager: SystemManager = null;
 
 export interface Instantiator {
 
+    initialize(): Promise<void>;
+
     createAuth(): Auth;
 
     createUsers(): UserManager;

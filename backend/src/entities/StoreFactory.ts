@@ -19,6 +19,8 @@ export class StoreFactory {
         store.userId = user.id;
         store.name = create.name;
         store.description = create.description;
+        store.cover = create.cover;
+        store.logo = create.logo;
 
         store.id = IDGenerator.generate({ prefix: "sto_" });
         store.createdAt = DateTime.today();
@@ -32,6 +34,8 @@ export class StoreFactory {
 
         store.name = update.name;
         store.description = update.description;
+        store.cover = update.cover;
+        store.logo = update.logo;
         store.updatedAt = DateTime.today();
 
         return store;

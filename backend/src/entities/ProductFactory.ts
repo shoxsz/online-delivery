@@ -16,6 +16,7 @@ export class ProductFactory {
         product.price = create.price;
         product.ingredients = create.ingredients;
         product.variations = create.variations;
+        product.icon = create.icon;
 
         product.id = IDGenerator.generate({ prefix: "prd_" });
         product.createdAt = DateTime.today();
@@ -33,6 +34,7 @@ export class ProductFactory {
         product.price = update.price;
         product.ingredients = update.ingredients;
         product.variations = update.variations;
+        product.icon = update.icon;
 
         product.updatedAt = DateTime.today();
 

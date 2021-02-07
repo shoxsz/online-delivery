@@ -32,6 +32,8 @@ export class Product extends BaseEntity {
 
     variations: { [variation: string]: ProductVariation[] };
 
+    icon: string;
+
     constructor(partial?: Partial<Product>) {
         super(partial);
         Object.assign(this, partial);

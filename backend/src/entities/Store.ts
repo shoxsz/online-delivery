@@ -6,6 +6,9 @@ export class Store extends BaseEntity {
     name: string;
     description: string;
 
+    cover: string;
+    logo: string;
+
     constructor(partial?: Partial<Store>) {
         super(partial);
         Object.assign(this, partial);

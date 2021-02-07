@@ -7,16 +7,20 @@ import { User } from "../entities/User";
 import { StoreExceptions } from "../errors/Store";
 import { SystemStoreRepo } from "./SystemStoreRepo";
 import { StoreSearch } from "../core/types/StoreSearch";
+import { ImageResolve } from "./ImageResolve";
 
 export class SystemStoreManager implements StoreManager {
 
     constructor(
-        private readonly stores: SystemStoreRepo
+        private readonly stores: SystemStoreRepo,
+        private readonly images: ImageResolve
     ){}
 
     async create(user: User, create: CreateStore): Promise<Store> {
 
         const store = StoreFactory.create(user, create);
+
+        await this.images.resolveIds(store, ["cover", "logo"], true);
 
         await this.stores.create(store);
 
@@ -29,6 +33,8 @@ export class SystemStoreManager implements StoreManager {
         const store = await this.getById(user, storeId);
 
         const updatedStore = StoreFactory.update(store, { ...update, id: storeId });
+
+        await this.images.resolveIds(updatedStore, ["cover", "logo"], true);
 
         await this.stores.update(user.id, storeId, updatedStore);
 

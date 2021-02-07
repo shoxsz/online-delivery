@@ -14,5 +14,17 @@ export class CreateStoreVal {
     @MaxLength(1000)
     @Expose()
     description: string;
+    
+    @IsString()
+    @MinLength(1)
+    @MaxLength(100)
+    @Expose()
+    cover: string;
+
+    @IsString()
+    @MinLength(1)
+    @MaxLength(100)
+    @Expose()
+    logo: string;
 
 }
