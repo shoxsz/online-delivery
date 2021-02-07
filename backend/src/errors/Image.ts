@@ -14,7 +14,7 @@ export class ImageNotFoundError extends ImageError {
 
 export class ImagesNotFoundError extends ImageError {
     constructor(ids: string[]) {
-        super(`As imagens ${ids.join(",")} não foram encontradas`);
+        super(`As imagens [${ids.join(",")}] não foram encontradas`);
     }
 }
 
