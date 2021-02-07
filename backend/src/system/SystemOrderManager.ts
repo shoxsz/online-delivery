@@ -24,6 +24,8 @@ export class SystemOrderManager implements OrderManager {
 
         await this.repo.createOrder(order);
 
+        //calculate order value
+        //get the callback url
         //send to payment gateway
 
     }
