@@ -28,4 +28,8 @@ export class OrderExceptions {
         return new InvalidOrderStores(ids);
     }
 
+    static invalidOrder(data: any) {
+
+    }
+
 }

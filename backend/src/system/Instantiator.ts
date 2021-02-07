@@ -61,7 +61,7 @@ export class SystemInstantiator implements Instantiator {
     }
 
     createOrder() {
-        return new SystemOrderManager();
+        return new SystemOrderManager(null);
     }
 
 }

@@ -1,12 +1,12 @@
 import { BaseEntity } from "./BaseEntity";
 import { Product } from "./Product";
 
-export class PizzaDetails {
+export class PizzaDetails<T = string | Product> {
 
-    flavor1Id: Product;
-    flavor2Id?: Product;
-    border?: Product;
-    tamanho: Product;
+    flavor1: T;
+    flavor2?: T;
+    border?: T;
+    tamanho: T;
 
 }
 
@@ -19,17 +19,17 @@ export class CostumerData {
 
 }
 
-export class OrderProduct {
+export class OrderProduct<T> {
 
     storeId: string;
-    details: PizzaDetails | any;
+    details: PizzaDetails<T> | any;
 
 }
 
 export class Order extends BaseEntity {
 
     costumerData: CostumerData;
-    products: OrderProduct[];
+    products: OrderProduct<Product>[];
 
     constructor(partial?: Partial<Order>) {
         super(partial);

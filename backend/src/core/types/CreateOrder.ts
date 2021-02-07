@@ -1,34 +1,10 @@
-export type PizzaDetails = {
+import { CostumerData, OrderProduct } from "../../entities/Order";
 
-    flavor1: string;
-    flavor2?: string;
-    border?: string;
-    tamanho: string;
-
-}
-
-export type OrderProduct = {
-
-    storeId: string;
-    details: PizzaDetails | any;
-
-}
-
-export type OrderCostumer = {
-
-    name: string;
-    document: string;
-    email: string;
-    phone: string;
-
-    //costumerId: string ??
-
-}
 
 export type CreateOrder = {
 
-    costumerData: OrderCostumer;
-    products: OrderProduct[];
+    costumerData: CostumerData;
+    products: OrderProduct<string>[];
     returnUrl: string;
 
 }
