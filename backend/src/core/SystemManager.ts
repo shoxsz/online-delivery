@@ -3,6 +3,7 @@ import { Auth } from "./Auth";
 import { StoreManager } from "./StoreManager";
 import { ProductManager } from "./ProductManager";
 import { ImageManager } from "./ImageManager";
+import { OrderManager } from "./OrderManager";
 
 class SystemManager {
 
@@ -11,7 +12,8 @@ class SystemManager {
         readonly users: UserManager,
         readonly store: StoreManager,
         readonly product: ProductManager,
-        readonly images: ImageManager
+        readonly images: ImageManager,
+        readonly order: OrderManager
     ) {}
 
 }
@@ -32,16 +34,21 @@ export interface Instantiator {
 
     createImage(): ImageManager;
 
+    createOrder(): OrderManager;
+
 }
 
-export const CreateSystem = (instantiator: Instantiator) => {
+export const CreateSystem = async (instantiator: Instantiator) => {
+
+    await instantiator.initialize();
 
     Manager = new SystemManager(
         instantiator.createAuth(),
         instantiator.createUsers(),
         instantiator.createStore(),
         instantiator.createProduct(),
-        instantiator.createImage()
+        instantiator.createImage(),
+        instantiator.createOrder()
     );
 
 }

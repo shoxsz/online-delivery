@@ -9,6 +9,7 @@ import { MongoUserManagerRepo } from "../system-repo/MongoUserManagerRepo";
 import { TokenRepo } from "../system-repo/TokenRepo";
 import { AuthWithToken } from "./AuthWithToken";
 import { SystemImageManager } from "./SystemImageManager";
+import { SystemOrderManager } from "./SystemOrderManager";
 import { SystemProductManager } from "./SystemProductManager";
 import { SystemStoreManager } from "./SystemStoreManager";
 import { SystemUserManager } from "./SystemUserManager";
@@ -57,6 +58,10 @@ export class SystemInstantiator implements Instantiator {
 
     createImage() {
         return new SystemImageManager(this.imageRepo, this.imageStore);
+    }
+
+    createOrder() {
+        return new SystemOrderManager();
     }
 
 }
