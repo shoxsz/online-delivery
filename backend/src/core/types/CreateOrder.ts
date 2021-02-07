@@ -1,8 +1,8 @@
 export type PizzaDetails = {
 
-    flavor1Id: string;
-    flavor2Id?: string;
-    border: string;
+    flavor1: string;
+    flavor2?: string;
+    border?: string;
     tamanho: string;
 
 }
@@ -16,8 +16,7 @@ export type OrderProduct = {
 
 export type OrderCostumer = {
 
-    firstName: string;
-    lastName: string;
+    name: string;
     document: string;
     email: string;
     phone: string;
@@ -28,7 +27,7 @@ export type OrderCostumer = {
 
 export type CreateOrder = {
 
-    clientData: OrderCostumer;
+    costumerData: OrderCostumer;
     products: OrderProduct[];
     returnUrl: string;
 

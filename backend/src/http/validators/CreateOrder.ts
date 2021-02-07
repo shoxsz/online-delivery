@@ -6,13 +6,13 @@ export class CreatePizzaDetailsVal {
     @IsString()
     @MaxLength(100)
     @Expose()
-    flavor1Id: string;
+    flavor1: string;
 
     @IsString()
     @MaxLength(100)
     @IsOptional()
     @Expose()
-    flavor2Id?: string;
+    flavor2?: string;
 
     @IsString()
     @MaxLength(100)
@@ -47,12 +47,7 @@ export class CreateOrderCostumerVal {
     @IsString()
     @MaxLength(100)
     @Expose()
-    firstName: string;
-
-    @IsString()
-    @MaxLength(100)
-    @Expose()
-    lastName: string;
+    name: string;
     
     @IsString()
     @MaxLength(100)
@@ -75,7 +70,7 @@ export class CreateOrderVal {
     @IsObject()
     @Type(() => CreateOrderCostumerVal)
     @Expose()
-    clientData: CreateOrderCostumerVal;
+    costumerData: CreateOrderCostumerVal;
 
     @ValidateNested()
     @IsArray()
