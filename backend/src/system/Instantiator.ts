@@ -1,8 +1,8 @@
 import { Instantiator } from "../core/SystemManager";
 import { FileImageStore } from "../images/FileImageStore";
-import { ConnectMongo } from "../system-repo";
 import { MongoImageResolve } from "../system-repo/MongoImageResolve";
 import { MongoSystemProductRepo } from "../system-repo/MongoProductManagerRepo";
+import { MongoRepo } from "../system-repo/MongoRepo";
 import { MongoStoreRepo } from "../system-repo/MongoStoreRepo";
 import { MongoSystemImageRepo } from "../system-repo/MongoSystemImageRepo";
 import { MongoUserManagerRepo } from "../system-repo/MongoUserManagerRepo";
@@ -11,10 +11,13 @@ import { AuthWithToken } from "./AuthWithToken";
 import { SystemImageManager } from "./SystemImageManager";
 import { SystemOrderManager } from "./SystemOrderManager";
 import { SystemProductManager } from "./SystemProductManager";
+import { SystemRepo } from "./SystemRepo";
 import { SystemStoreManager } from "./SystemStoreManager";
 import { SystemUserManager } from "./SystemUserManager";
 
 export class SystemInstantiator implements Instantiator {
+
+    private systemRepo: SystemRepo;
 
     private tokenRepo: TokenRepo;
     private userRepo: MongoUserManagerRepo;
@@ -27,7 +30,8 @@ export class SystemInstantiator implements Instantiator {
 
     async initialize() {
 
-        await ConnectMongo("mongodb://127.0.0.1:40000");
+        this.systemRepo = new MongoRepo("mongodb://127.0.0.1:40000");
+        await this.systemRepo.initialize();
 
         this.tokenRepo = new TokenRepo();
         this.userRepo = new MongoUserManagerRepo();
@@ -38,6 +42,14 @@ export class SystemInstantiator implements Instantiator {
 
         this.imageStore = new FileImageStore("images");
 
+    }
+
+    async clearRepo() {
+        await this.systemRepo.clearRepo();
+    }
+
+    async shutdownRepo() {
+        await this.systemRepo.shutdown();
     }
 
     createAuth() {
