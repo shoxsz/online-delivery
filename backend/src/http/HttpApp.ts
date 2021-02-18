@@ -25,10 +25,8 @@ export class HttpApp implements App {
     ) {}
 
     async initialize(instantiator: Instantiator): Promise<void> {
-
-        await instantiator.initialize();
         
-        CreateSystem(instantiator);
+        await CreateSystem(instantiator);
 
         this.controllers.push(new UserController() as any);
         this.controllers.push(new AuthController() as any);

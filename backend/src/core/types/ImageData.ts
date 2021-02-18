@@ -5,8 +5,10 @@ export type ImageData = {
 
     data?: Buffer;
 
+    //mime type
     format: string;
-
+    
+    //in bytes
     size: number;
 
 }
