@@ -62,15 +62,6 @@ export const InitializeMock = async () => {
 
 export const ShutdownMock = async () => {
 
-    await Promise.all(products?.map(async product => Manager.product.delete(user, store.id, product.id)));
+    
 
-    if(store) {
-        await Manager.store.delete(user, store.id);
-    }
-
-    await Promise.all(images?.map(async image => Manager.images.delete(user, image.id)));
-
-    if(user) {
-        await Manager.users.delete(user);
-    }
 }
