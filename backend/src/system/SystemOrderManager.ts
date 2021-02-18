@@ -2,12 +2,14 @@ import { Entities } from "../core/Entities";
 import { OrderManager } from "../core/OrderManager";
 import { CreateOrder } from "../core/types/CreateOrder";
 import { Order, OrderProduct, PizzaDetails } from "../entities/Order";
-import { OrderFactory } from "../entities/OrderFactory";
 import { Product } from "../entities/Product";
 import { OrderExceptions } from "../errors/Order";
+import { PizzaOrderProcessor } from "./orders/PizzaOrderProcessor";
 import { SystemOrderRepo } from "./SystemOrderRepo";
 
 export class SystemOrderManager implements OrderManager {
+
+    pizzaOrder = new PizzaOrderProcessor();
 
     constructor(
         private readonly repo: SystemOrderRepo
@@ -21,11 +23,10 @@ export class SystemOrderManager implements OrderManager {
 
         order.costumerData = create.costumerData;
         order.products = await this.resolveProducts(create.products);
+        order.value = this.calculateOrderValue(order.products);
 
         await this.repo.createOrder(order);
 
-        //calculate order value
-        //get the callback url
         //send to payment gateway
 
     }
@@ -35,7 +36,7 @@ export class SystemOrderManager implements OrderManager {
     }
 
     private async resolveProducts(products: OrderProduct<string>[]): Promise<OrderProduct<Product>[]> {
-    
+
         if(!products.length) {
             throw OrderExceptions.noValidProducts();
         }
@@ -57,32 +58,26 @@ export class SystemOrderManager implements OrderManager {
         const errorProducts: any = {};
         const resolved = await Promise.all(products.map(async product => {
 
-            const pizzaDetails = product.details as PizzaDetails<string>;
+            const productsToResolve = this.pizzaOrder.getProductsToResolve(product.details);
+            const keys = Object.keys(productsToResolve);
 
-            const resolvedDetails: PizzaDetails<Product> = {
-                flavor1: null,
-                tamanho: null
-            };
+            await Promise.all(keys.map(async field => {
 
-            ["flavor1", "flavor2", "border", "tamanho"].forEach(async field => {
-
-                if(pizzaDetails[field]) {
-                    try{
-                        resolvedDetails[field] = await this.repo.resolveProduct(product.storeId, pizzaDetails[field]);
-                    } catch(error) {
-                        if(!errorProducts[product.storeId]) {
-                            errorProducts[product.storeId] = {};
-                        }
-
-                        errorProducts[product.storeId] = { field: pizzaDetails[field] };
+                try{
+                    product.details[field] = await this.repo.resolveProduct(product.storeId, productsToResolve[field]);
+                } catch(error) {
+                    if(!errorProducts[product.storeId]) {
+                        errorProducts[product.storeId] = {};
                     }
+
+                    errorProducts[product.storeId] = { field: productsToResolve[field] };
                 }
 
-            });
+            }));
 
             return {
                 storeId: product.storeId,
-                details: resolvedDetails
+                details: product.details
             };
         }));
 
@@ -92,6 +87,10 @@ export class SystemOrderManager implements OrderManager {
 
         return resolved;
 
+    }
+
+    private calculateOrderValue(products: OrderProduct<Product>[]): number {
+        return products.reduce((value, order) => value + this.pizzaOrder.calculateOrderValue(order), 0);
     }
 
 }

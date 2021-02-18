@@ -30,6 +30,7 @@ export class Order extends BaseEntity {
 
     costumerData: CostumerData;
     products: OrderProduct<Product>[];
+    value: number;
 
     constructor(partial?: Partial<Order>) {
         super(partial);

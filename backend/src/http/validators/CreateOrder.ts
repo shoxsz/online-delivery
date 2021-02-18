@@ -1,5 +1,6 @@
 import { Expose, Type } from "class-transformer";
-import { IsArray, IsEmail, IsObject, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
+import { IsArray, IsEmail, IsEnum, IsObject, IsOptional, IsString, MaxLength, ValidateIf, ValidateNested } from "class-validator";
+import { Gateways } from "../../core/types/Gateways";
 
 export class CreatePizzaDetailsVal {
 
@@ -78,8 +79,19 @@ export class CreateOrderVal {
     @Expose()
     products: CreateOrderProductVal[];
 
-    @IsString()
+    @IsEnum(Gateways)
     @Expose()
-    returnUrl: string;
+    gateway: Gateways;
+
+    @IsString()
+    @MaxLength(1000)
+    @ValidateIf((obj) => obj.gateway == Gateways.PAGSEGURO)
+    @Expose()
+    cardToken?: string;
+
+    @IsString()
+    @ValidateIf((obj) => obj.gateway == Gateways.PICPAY)
+    @Expose()
+    returnUrl?: string;
 
 }
