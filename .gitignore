@@ -2,6 +2,6 @@ node_modules
 dist
 build
 db
-image-store
+backend/images
 
 .env
