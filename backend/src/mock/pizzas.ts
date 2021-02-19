@@ -10,7 +10,8 @@ export const mockPizzas = (storeId: string, icon: string) => {
         ingredients: [],
         price: 30,
         storeId,
-        variations: {}
+        variations: {},
+        tags: ["pizza"]
     }
 
     PIZZAS.PIZZA02 = {
@@ -20,7 +21,8 @@ export const mockPizzas = (storeId: string, icon: string) => {
         ingredients: [],
         price: 30,
         storeId,
-        variations: {}
+        variations: {},
+        tags: ["pizza"]
     }
 
     PIZZAS.PIZZA03 = {
@@ -30,7 +32,8 @@ export const mockPizzas = (storeId: string, icon: string) => {
         ingredients: [],
         price: 30,
         storeId,
-        variations: {}
+        variations: {},
+        tags: ["pizza"]
     }
 
     PIZZAS.PIZZA04 = {
@@ -40,7 +43,8 @@ export const mockPizzas = (storeId: string, icon: string) => {
         ingredients: [],
         price: 30,
         storeId,
-        variations: {}
+        variations: {},
+        tags: ["pizza"]
     }
 
     PIZZAS.PIZZA05 = {
@@ -50,7 +54,8 @@ export const mockPizzas = (storeId: string, icon: string) => {
         ingredients: [],
         price: 30,
         storeId,
-        variations: {}
+        variations: {},
+        tags: ["pizza"]
     }
 
     PIZZAS.PEQUENA = {
@@ -60,7 +65,8 @@ export const mockPizzas = (storeId: string, icon: string) => {
         ingredients: [],
         price: 25,
         storeId,
-        variations: {}
+        variations: {},
+        tags: ["tamanho"]
     }
 
     PIZZAS.MEDIA = {
@@ -70,7 +76,8 @@ export const mockPizzas = (storeId: string, icon: string) => {
         ingredients: [],
         price: 30,
         storeId,
-        variations: {}
+        variations: {},
+        tags: ["tamanho"]
     }
 
     PIZZAS.GRANDE = {
@@ -80,7 +87,8 @@ export const mockPizzas = (storeId: string, icon: string) => {
         ingredients: [],
         price: 35,
         storeId,
-        variations: {}
+        variations: {},
+        tags: ["tamanho"]
     }
 
     PIZZAS.BORDA_CAT = {
@@ -90,7 +98,8 @@ export const mockPizzas = (storeId: string, icon: string) => {
         ingredients: [],
         price: 3,
         storeId,
-        variations: {}
+        variations: {},
+        tags: ["borda"]
     }
 
     PIZZAS.BORDA_CHE = {
@@ -100,7 +109,8 @@ export const mockPizzas = (storeId: string, icon: string) => {
         ingredients: [],
         price: 5,
         storeId,
-        variations: {}
+        variations: {},
+        tags: ["borda"]
     }
 
     return PIZZAS;

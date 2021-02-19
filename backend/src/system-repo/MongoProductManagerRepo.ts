@@ -18,6 +18,16 @@ export class MongoSystemProductRepo implements SystemProductRepo {
         const modelProduct = convertToModel(product);
 
         await this.model.create(modelProduct);
+        await this.storesModel.updateOne(
+            {
+                _id: product.storeId
+            },
+            {
+                $addToSet: {
+                    tags: { $each: product.tags }
+                }
+            }
+        );
 
         return product;
 
@@ -26,6 +36,17 @@ export class MongoSystemProductRepo implements SystemProductRepo {
     async update(id: string, product: Partial<Product>): Promise<any> {
         
         const response = await this.model.updateOne({ _id: id }, product);
+
+        await this.storesModel.updateOne(
+            {
+                _id: product.storeId
+            },
+            {
+                $addToSet: {
+                    tags: { $each: product.tags }
+                }
+            }
+        );
 
         return response;
 
@@ -84,6 +105,8 @@ export class MongoSystemProductRepo implements SystemProductRepo {
     async deleteById(id: string): Promise<any> {
         
         await this.model.deleteOne({ _id: id });
+
+        //remove store tags
 
     }
 

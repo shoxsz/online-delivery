@@ -8,7 +8,8 @@ export const PIZZAS = {
         icon: null,
         ingredients: [],
         variations: {},
-        price: 30
+        price: 30,
+        tags: ["pizza"]
     }),
 
     pizzaFrango: ProductFactory.create({
@@ -18,7 +19,8 @@ export const PIZZAS = {
         icon: null,
         ingredients: [],
         variations: {},
-        price: 30
+        price: 30,
+        tags: ["pizza"]
     }),
 
     pizzaLomboCanadense: ProductFactory.create({
@@ -27,6 +29,7 @@ export const PIZZAS = {
         description: "Pizza de Lombo Canadense",
         icon: null,
         ingredients: [],
+        tags: ["pizza"],
         variations: {
             tamanho: [
                 {
@@ -56,7 +59,8 @@ export const PIZZAS = {
         icon: null,
         ingredients: [],
         variations: {},
-        price: 5
+        price: 5,
+        tags: ["borda"]
     }),
 
     borderChe: ProductFactory.create({
@@ -66,7 +70,8 @@ export const PIZZAS = {
         icon: null,
         ingredients: [],
         variations: {},
-        price: 5
+        price: 5,
+        tags: ["borda"]
     }),
 
     tamanhoPequena: ProductFactory.create({
@@ -76,7 +81,8 @@ export const PIZZAS = {
         icon: null,
         ingredients: [],
         variations: {},
-        price: 25
+        price: 25,
+        tags: ["tamanho"]
     }),
 
     tamanhoMedio: ProductFactory.create({
@@ -86,7 +92,8 @@ export const PIZZAS = {
         icon: null,
         ingredients: [],
         variations: {},
-        price: 30
+        price: 30,
+        tags: ["tamanho"]
     }),
 
     tamanhoGrande: ProductFactory.create({
@@ -96,6 +103,7 @@ export const PIZZAS = {
         icon: null,
         ingredients: [],
         variations: {},
-        price: 35
+        price: 35,
+        tags: ["tamanho"]
     })
 }
