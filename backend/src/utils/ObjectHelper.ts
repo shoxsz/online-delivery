@@ -37,7 +37,7 @@ export class ObjectHelper {
     static shrink<T>(object: T) {
 
         Object.keys(object).forEach(key => {
-            if (object[key] == undefined) {
+            if (typeof object[key] === "undefined") {
                 delete object[key];
             }
         });

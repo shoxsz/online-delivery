@@ -30,7 +30,7 @@ export class PizzaOrderProcessor implements OrderProcessor {
 
         const flavor1Price = this.getProductPrice(details.flavor1, details.tamanho);
         const flavor2Price = this.getProductPrice(details.flavor2, details.tamanho);
-        const borderPrice = this.getProductPrice(details.border, details.tamanho);
+        const borderPrice = details.border?.price || 0;
 
         if(twoFlavors) {
             return ((flavor1Price + flavor2Price) / 2) + borderPrice;
