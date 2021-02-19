@@ -22,6 +22,8 @@ export class Product extends BaseEntity {
 
     storeId: string;
 
+    tags: string[];
+
     name: string;
 
     description: string;

@@ -21,6 +21,7 @@ export class StoreFactory {
         store.description = create.description;
         store.cover = create.cover;
         store.logo = create.logo;
+        store.tags = create.tags || [];
 
         store.id = IDGenerator.generate({ prefix: "sto_" });
         store.createdAt = DateTime.today();
@@ -36,6 +37,7 @@ export class StoreFactory {
         store.description = update.description;
         store.cover = update.cover;
         store.logo = update.logo;
+        store.tags = update.tags || [];
         store.updatedAt = DateTime.today();
 
         return store;

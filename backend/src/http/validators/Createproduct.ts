@@ -56,6 +56,11 @@ export class CreateProductVal {
     @Expose()
     name: string;
 
+    @MinLength(1)
+    @MaxLength(100)
+    @Expose()
+    tags: string[];
+
     @IsString()
     @MaxLength(1000)
     @Expose()

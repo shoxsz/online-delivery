@@ -1,5 +1,5 @@
 import { Expose } from "class-transformer";
-import { IsString, MaxLength, MinLength } from "class-validator";
+import { IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 
 export class CreateStoreVal {
     
@@ -26,5 +26,11 @@ export class CreateStoreVal {
     @MaxLength(100)
     @Expose()
     logo: string;
+
+    @MinLength(1)
+    @MaxLength(100)
+    @IsOptional()
+    @Expose()
+    tags?: string[];
 
 }

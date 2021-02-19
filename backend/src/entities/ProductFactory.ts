@@ -12,6 +12,7 @@ export class ProductFactory {
 
         product.storeId = create.storeId;
         product.name = create.name;
+        product.tags = create.tags;
         product.description = create.description;
         product.price = create.price;
         product.ingredients = create.ingredients;
@@ -30,6 +31,7 @@ export class ProductFactory {
 
         product.storeId = update.storeId;
         product.name = update.name;
+        product.tags = update.tags;
         product.description = update.description;
         product.price = update.price;
         product.ingredients = update.ingredients;

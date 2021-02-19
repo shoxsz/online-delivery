@@ -6,4 +6,6 @@ export type CreateStore = {
     cover: string;
     logo: string;
 
+    tags?: string[];
+
 }

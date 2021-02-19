@@ -4,6 +4,8 @@ export type CreateProduct = {
 
     storeId: string;
 
+    tags: string[];
+
     name: string;
 
     description: string;

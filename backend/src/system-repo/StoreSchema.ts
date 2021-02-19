@@ -10,6 +10,8 @@ export type StoreSchemaType = {
     name: string,
     description: string
 
+    tags: string[]
+
 }
 
 export const StoreSchema = new mongoose.Schema({
@@ -20,7 +22,9 @@ export const StoreSchema = new mongoose.Schema({
 
     userId: String,
     name: String,
-    description: String
+    description: String,
+
+    tags: [String]
 
 });
 
