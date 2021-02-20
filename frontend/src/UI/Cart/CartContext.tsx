@@ -1,12 +1,14 @@
 import React from "react";
+import { Product } from "../../client/types/Product";
 import { PizzaOrder } from "../../client/types/ProductOrder";
 
-export type CartOrder = PizzaOrder // | DrinkOrder;
+export type CartOrder = PizzaOrder<Product> // | DrinkOrder;
 
 export type CartStoreOrder = {
     type: "pizza" | "drinks",
     storeId: string,
-    order: CartOrder
+    order: CartOrder,
+    repeat?: number
 };
 
 export type CartContext = {

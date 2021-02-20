@@ -1,10 +1,10 @@
 import { Product } from "./Product";
 
-export type PizzaOrder = {
+export type PizzaOrder<T = string | Product> = {
 
-    flavor1: string;
-    flavor2?: string;
-    border?: string;
-    tamanho: string;
+    flavor1: T;
+    flavor2?: T;
+    border?: T;
+    tamanho: T;
 
 }

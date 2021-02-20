@@ -7,7 +7,7 @@ import { BordasSection } from './Sections/BordasSection';
 
 import "./MenuCard.sass"
 import { PizzaOrder } from '../client/types/ProductOrder';
-import { Cart, CartOrder, CartStoreOrder } from './Cart/CartContext';
+import { Cart } from './Cart/CartContext';
 
 export type MenuCardProps = {
     products: Product[]
@@ -21,7 +21,7 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
     const [borders, setBorders] = React.useState<any[]>([]);
     const [tamanhos, setTamanhos] = React.useState<any[]>([]);
 
-    const [order, setPizzaOrder] = React.useState<Partial<PizzaOrder>>({});
+    const [order, setPizzaOrder] = React.useState<Partial<PizzaOrder<Product>>>({});
 
     React.useEffect(() => {
 
@@ -38,10 +38,10 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
     const addToCart = () => {
         cart?.addOrder({
             order: {
-                flavor1: order.flavor1 || "",
-                flavor2: order.flavor2 || "",
-                border: order.border || "",
-                tamanho: order.tamanho || "",
+                flavor1: order.flavor1 as Product,
+                flavor2: order.flavor2 as Product,
+                border: order.border as Product,
+                tamanho: order.tamanho as Product,
             },
             storeId: "123",
             type: "pizza"
@@ -50,18 +50,17 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
 
     const finish = () => {
         addToCart();
-        //display window with payment options
     }
 
     return (
         <div className="MenuCard">
             <h1>Monte a sua pizza(s)!</h1>
             <h3>Escolha o tamanho da sua pizza!</h3>
-            <TamanhoSection tamanhos={ tamanhos } onSelect={ tamanho => setPizzaOrder({ ...order, tamanho: tamanho?.id }) }/>
+            <TamanhoSection tamanhos={ tamanhos } onSelect={ tamanho => setPizzaOrder({ ...order, tamanho }) }/>
             <h3>Escolha até dois sabores!</h3>
-            <PizzaSection pizzas={ pizzas } onSelect={ (flavor1, flavor2) => setPizzaOrder({ ...order, flavor1: flavor1?.id, flavor2: flavor2?.id }) } />
+            <PizzaSection pizzas={ pizzas } onSelect={ (flavor1, flavor2) => setPizzaOrder({ ...order, flavor1, flavor2 }) } />
             <h3>Bordas!</h3>
-            <BordasSection bordas={ borders } onSelect={ border => setPizzaOrder({ ...order, border: border?.id }) } />
+            <BordasSection bordas={ borders } onSelect={ border => setPizzaOrder({ ...order, border }) } />
             <div className="MenuCard-buttons">
                 <IconButton margin="2px" icon="C" color="#77dd77" onClick={ addToCart } />
                 <IconButton margin="2px" icon="F" color="#e4cd05" onClick={ finish } />

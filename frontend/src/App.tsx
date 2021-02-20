@@ -1,6 +1,7 @@
 import { CartButton } from "./UI/Cart/CartButton";
 import { CartContext } from "./UI/Cart/CartContext";
 import { MenuCard } from "./UI/MenuCard";
+import { Modal } from "./UI/Modal/Modal";
 
 function App() {
   return (

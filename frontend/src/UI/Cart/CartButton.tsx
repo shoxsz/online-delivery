@@ -1,9 +1,14 @@
 import React, { useContext } from "react";
+import { Modal } from "../Modal/Modal";
 
 import "./CartButton.sass"
 import { Cart } from "./CartContext";
+import { CartModal } from "./CartModal";
+import { PizzaCart } from "./Items/PizzaCart";
 
 export const CartButton: React.FC = () => {
+
+    const [showCart, setShowCart] = React.useState(false);
 
     const cart = useContext(Cart);
 
@@ -12,12 +17,15 @@ export const CartButton: React.FC = () => {
     }
 
     return (
-        <div className="CartButton">
+        <>
+        <div className="CartButton" onClick={ () => setShowCart(!showCart) }>
             <div className="CartButton-icon">
                 C
             </div>
             <div className="CartButton-count">{ cart?.orders.length }</div>
         </div>
+        <CartModal show={ showCart } />
+        </>
     );
 
 }
