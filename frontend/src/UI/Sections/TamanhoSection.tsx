@@ -6,11 +6,16 @@ import "./TamanhoSection.sass"
 
 export type TamanhoSectionProps = {
     tamanhos: Product[];
+    onSelect: (tamanho: Product) => void
 }
 
-export const TamanhoSection: React.FC<TamanhoSectionProps> = ({ tamanhos }) => {
+export const TamanhoSection: React.FC<TamanhoSectionProps> = ({ tamanhos, onSelect }) => {
 
     const [selected, setSelected] = React.useState<number>(0);
+
+    React.useEffect(() => {
+        onSelect(tamanhos[selected]);
+    }, [selected]);
 
     const renderTamanhos = () => {
         return tamanhos.map((tamanho, idx) => renderTamanho(idx))

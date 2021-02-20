@@ -6,11 +6,20 @@ import "./BordasSection.sass"
 
 export type BordasSectionProps = {
     bordas: Product[];
+    onSelect: (border?: Product) => void;
 }
 
-export const BordasSection: React.FC<BordasSectionProps> = ({ bordas }) => {
+export const BordasSection: React.FC<BordasSectionProps> = ({ bordas, onSelect }) => {
 
-    const [selected, setSelected] = React.useState<number | null>(null);
+    const [selected, setSelected] = React.useState<number>();
+
+    React.useEffect(() => {
+        if(typeof selected == "number") {
+            onSelect(bordas[selected]);
+        } else {
+            onSelect(undefined);
+        }
+    }, [selected]);
 
     const renderBordas = () => {
         return bordas.map((borda, idx) => {
@@ -24,7 +33,7 @@ export const BordasSection: React.FC<BordasSectionProps> = ({ bordas }) => {
 
     const handleClick = (idx: number) => {
         if(idx === selected) {
-            setSelected(null);
+            setSelected(undefined);
         } else {
             setSelected(idx);
         }
