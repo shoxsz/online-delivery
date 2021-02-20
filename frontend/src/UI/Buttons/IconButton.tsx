@@ -1,20 +1,37 @@
-import React, { MouseEventHandler } from "react";
+import React, { CSSProperties, MouseEventHandler } from "react";
+import { Icon } from "../Icons/Icon";
 
 import "./IconButton.sass"
 
 export type IconButtonProps = {
     icon: string;
-    color: string;
+    size?: number;
+    bgColor?: string;
+    color?: string;
     margin?: string
     onClick?: MouseEventHandler
     hover?: boolean
 }
 
-export const IconButton: React.FC<IconButtonProps> = ({ icon, color, margin, onClick, hover = true }) => {
+export const IconButton: React.FC<IconButtonProps> = ({ icon, size = 32, bgColor, color, margin, onClick, hover = true }) => {
+
+    const createStyle = React.useCallback(() => {
+
+        const style: CSSProperties = {
+            background: bgColor,
+            width: size,
+            height: size,
+            margin,
+            cursor: hover? "pointer" : undefined
+        };
+
+        return style;
+
+    }, [icon, size, color, margin, hover]);
 
     return (
-        <div className="IconButton" style={ { backgroundColor: color, margin: margin, cursor: hover? "pointer" : undefined } } onClick={ onClick }>
-            { icon }
+        <div className="IconButton" style={ createStyle() } onClick={ onClick }>
+            <Icon icon={ icon } color={ color } size={ size } />
         </div>
     )
 

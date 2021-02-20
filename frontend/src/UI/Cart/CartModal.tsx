@@ -17,7 +17,6 @@ export const CartModal: React.FC<CartModalProps> = ({ show }) => {
             <div className="CartModal-element">
                 { getOrderElement(order) }
                 <div className="CartModal-element-options">
-                    X
                 </div>
             </div>
         )

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { IconButton } from "../Buttons/IconButton";
 import { Modal } from "../Modal/Modal";
 
 import "./CartButton.sass"
@@ -20,7 +21,7 @@ export const CartButton: React.FC = () => {
         <>
         <div className="CartButton" onClick={ () => setShowCart(!showCart) }>
             <div className="CartButton-icon">
-                C
+                <IconButton icon="cart" />
             </div>
             <div className="CartButton-count">{ cart?.orders.length }</div>
         </div>

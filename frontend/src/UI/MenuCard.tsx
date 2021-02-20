@@ -62,8 +62,8 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
             <h3>Bordas!</h3>
             <BordasSection bordas={ borders } onSelect={ border => setPizzaOrder({ ...order, border }) } />
             <div className="MenuCard-buttons">
-                <IconButton margin="2px" icon="C" color="#77dd77" onClick={ addToCart } />
-                <IconButton margin="2px" icon="F" color="#e4cd05" onClick={ finish } />
+                <IconButton margin="2px" icon="addCart" size={32} bgColor="#77dd77" onClick={ addToCart } />
+                <IconButton margin="2px" icon="fastCart" size={32} bgColor="#e4cd05" onClick={ finish } />
             </div>
         </div>
     );
