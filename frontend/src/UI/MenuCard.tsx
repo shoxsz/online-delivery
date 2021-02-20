@@ -7,12 +7,15 @@ import { BordasSection } from './Sections/BordasSection';
 
 import "./MenuCard.sass"
 import { PizzaOrder } from '../client/types/ProductOrder';
+import { Cart, CartOrder, CartStoreOrder } from './Cart/CartContext';
 
 export type MenuCardProps = {
     products: Product[]
 };
 
 export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) => {
+
+    const cart = React.useContext(Cart);
 
     const [pizzas, setPizzas] = React.useState<any[]>([]);
     const [borders, setBorders] = React.useState<any[]>([]);
@@ -33,12 +36,21 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
     }, [products]);
 
     const addToCart = () => {
-        //validate pizza order
-        //add to cart
+        cart?.addOrder({
+            order: {
+                flavor1: order.flavor1 || "",
+                flavor2: order.flavor2 || "",
+                border: order.border || "",
+                tamanho: order.tamanho || "",
+            },
+            storeId: "123",
+            type: "pizza"
+        });
     }
 
     const finish = () => {
-
+        addToCart();
+        //display window with payment options
     }
 
     return (
