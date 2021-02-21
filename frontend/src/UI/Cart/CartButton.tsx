@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
 import { IconButton } from "../Buttons/IconButton";
-import { Modal } from "../Modal/Modal";
 
 import "./CartButton.sass"
 import { Cart } from "./CartContext";
 import { CartModal } from "./CartModal";
-import { PizzaCart } from "./Items/PizzaCart";
 
 export const CartButton: React.FC = () => {
 
@@ -25,7 +23,7 @@ export const CartButton: React.FC = () => {
             </div>
             <div className="CartButton-count">{ cart?.orders.length }</div>
         </div>
-        <CartModal show={ showCart } />
+        <CartModal show={ showCart } onClose={ () => setShowCart(false) } />
         </>
     );
 

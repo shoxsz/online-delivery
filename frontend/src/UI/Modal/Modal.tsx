@@ -3,26 +3,39 @@ import React from "react";
 import "./Modal.sass"
 
 export type ModalProps = {
-
-    show: boolean
-
+    show: boolean;
+    closeWhenClickOutside?: boolean;
+    onClose?: () => void;
 }
 
-export const Modal: React.FC<ModalProps> = ({ show, children }) => {
+export const Modal: React.FC<ModalProps> = ({ show, closeWhenClickOutside = true, onClose, children }) => {
 
-    const [modalShow, setModalShow] = React.useState(false);
+    const modalRef = React.createRef<HTMLDivElement>();
 
-    React.useEffect(() => {
-        setModalShow(show);
-    }, [show]);
+    const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+
+        if(e.target !== modalRef.current) {
+            return;
+        }
+
+        if(closeWhenClickOutside) {
+            close();
+        }
+    }
+
+    const close = () => {
+        onClose?.();
+    }
 
     if(!show) {
         return null;
     }
 
     return (
-        <div className="Modal">
-            { children }
+        <div ref={ modalRef } className="Modal" onClick={handleClick}>
+            <div className="Modal-window">
+                { children }
+            </div>
         </div>
     )
 

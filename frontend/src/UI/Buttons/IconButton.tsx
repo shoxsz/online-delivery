@@ -1,10 +1,10 @@
 import React, { CSSProperties, MouseEventHandler } from "react";
-import { Icon } from "../Icons/Icon";
+import { Icon, ICONS_TYPE } from "../Icons/Icon";
 
 import "./IconButton.sass"
 
 export type IconButtonProps = {
-    icon: string;
+    icon: keyof ICONS_TYPE;
     size?: number;
     bgColor?: string;
     color?: string;
