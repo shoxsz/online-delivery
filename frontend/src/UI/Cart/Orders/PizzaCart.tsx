@@ -2,7 +2,7 @@ import React from "react";
 import { IconButton } from "../../Buttons/IconButton";
 import { CounterInput } from "../../Inputs/CounterInput";
 import { CartStoreOrder } from "../CartContext";
-import { useOrders } from "../hooks/OrderHook";
+import { useCart } from "../hooks/useCart";
 
 import "./PizzaCart.sass"
 
@@ -13,7 +13,7 @@ export type PizzaCartProps = {
 
 export const PizzaCart: React.FC<PizzaCartProps> = ({ idx, order: { order, storeId, type, quantity, price } }) => {
 
-    const orders = useOrders();
+    const cart = useCart();
 
     const formatPizzaName = () => {
 
@@ -38,11 +38,11 @@ export const PizzaCart: React.FC<PizzaCartProps> = ({ idx, order: { order, store
             <div className="PizzaCart-details">
                 <div>
                     { formatPizzaName() }
-                    <CounterInput min={ 1 } onChange={ value => orders.updateQuantity(idx, value) }/>
+                    <CounterInput min={ 1 } onChange={ value => cart.updateQuantity(idx, value) }/>
                 </div>
                 <div className="PizzaCart-options">
                     <div className="PizzaCart-option">
-                        <IconButton icon={ "trash" } size={ 32 } />
+                        <div><IconButton icon={ "trash" } size={ 32 } /></div>
                         Remover
                     </div>
                 </div>

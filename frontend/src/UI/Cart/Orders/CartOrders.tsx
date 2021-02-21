@@ -23,12 +23,8 @@ export const CartOrders: React.FC<CartOrdersProps> = ({ orders }) => {
 
     return (
         <div className="CartOrders">
-            <div className="CartOrders-title">Meus Pedidos</div>
             <div className="CartOrders-orders">
                 { renderOrders() }
-            </div>
-            <div className="CartOrders-total">
-                Total: R$ {100}
             </div>
         </div>
     )

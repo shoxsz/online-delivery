@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Modal } from "../Modal/Modal";
-import { Cart } from "./CartContext";
 import { CartOrders } from "./Orders/CartOrders";
 import { EmptyCart } from "./EmptyCart";
+
+import "./CartModal.sass"
+import { useCart } from "./hooks/useCart";
 
 export type CartModalProps = {
     show: boolean;
@@ -11,17 +13,23 @@ export type CartModalProps = {
 
 export const CartModal: React.FC<CartModalProps> = ({ show, onClose }) => {
 
-    const cart = useContext(Cart);
+    const cart = useCart();
 
     return (
         <div className="CartModal">
             <Modal show={ show } onClose={ onClose }>
-            {
-                !!cart?.orders.length && <CartOrders orders={ cart.orders } />
-            }
-            {
-                !cart?.orders.length && <EmptyCart/>
-            }
+                <div className="CartModal-title">Meus Pedidos</div>
+                <div className="CartModal-orders">
+                {
+                    !!cart.orders?.length && <CartOrders orders={ cart.orders } />
+                }
+                {
+                    !cart.orders?.length && <EmptyCart/>
+                }
+                </div>
+                <div className="CartModal-footer">
+                    Total: R$ {cart.calculateTotal()}
+                </div>
             </Modal>
         </div>
     );
