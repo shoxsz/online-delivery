@@ -5,6 +5,7 @@ import { PizzaOrder } from "../../client/types/ProductOrder";
 export type CartOrder = PizzaOrder<Product> // | DrinkOrder;
 
 export type CartStoreOrder = {
+    id: string,
     type: "pizza" | "drinks",
     storeId: string,
     order: CartOrder,

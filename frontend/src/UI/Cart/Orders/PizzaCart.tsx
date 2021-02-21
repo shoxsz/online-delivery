@@ -15,12 +15,14 @@ export const PizzaCart: React.FC<PizzaCartProps> = ({ idx, order: { order, store
 
     const cart = useCart();
 
+    console.log("Order", order);
+
     const formatPizzaName = () => {
 
         let name = "";
 
         if(order.flavor2) {
-            name = `(1/2)${order.flavor1.name}, (1/2)${order.flavor2.name}`;
+            name = `(1/2)${order.flavor1?.name}, (1/2)${order.flavor2.name}`;
         } else {
             name = order.flavor1.name;
         }
@@ -42,7 +44,7 @@ export const PizzaCart: React.FC<PizzaCartProps> = ({ idx, order: { order, store
                 </div>
                 <div className="PizzaCart-options">
                     <div className="PizzaCart-option">
-                        <div><IconButton icon={ "trash" } size={ 32 } /></div>
+                        <div><IconButton icon={ "trash" } size={ 32 } onClick={ () => cart.removeOrder(idx) } /></div>
                         Remover
                     </div>
                 </div>

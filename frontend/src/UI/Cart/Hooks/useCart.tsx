@@ -1,5 +1,6 @@
 import React from "react";
 import { Cart, CartStoreOrder } from "../CartContext";
+import { v4 } from "uuid";
 
 export const useCart = () => {
 
@@ -9,6 +10,7 @@ export const useCart = () => {
 
         const priceOrder: any = {
             ...order,
+            id: v4(),
             price: 25 //we must calculate this price!
         };
 
