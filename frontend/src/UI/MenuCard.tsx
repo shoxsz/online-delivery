@@ -7,7 +7,7 @@ import { BordasSection } from './Sections/BordasSection';
 
 import "./MenuCard.sass"
 import { PizzaOrder } from '../client/types/ProductOrder';
-import { Cart } from './Cart/CartContext';
+import { useOrders } from './Cart/hooks/OrderHook';
 
 export type MenuCardProps = {
     products: Product[]
@@ -15,7 +15,7 @@ export type MenuCardProps = {
 
 export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) => {
 
-    const cart = React.useContext(Cart);
+    const orders = useOrders();
 
     const [pizzas, setPizzas] = React.useState<any[]>([]);
     const [borders, setBorders] = React.useState<any[]>([]);
@@ -36,7 +36,7 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
     }, [products]);
 
     const addToCart = () => {
-        cart?.addOrder({
+        orders.addOrder({
             order: {
                 flavor1: order.flavor1 as Product,
                 flavor2: order.flavor2 as Product,
@@ -44,7 +44,8 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
                 tamanho: order.tamanho as Product,
             },
             storeId: "123",
-            type: "pizza"
+            type: "pizza",
+            quantity: 1
         });
     }
 

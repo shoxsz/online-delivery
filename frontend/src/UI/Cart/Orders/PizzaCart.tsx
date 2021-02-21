@@ -1,15 +1,19 @@
 import React from "react";
-import { Product } from "../../../client/types/Product";
-import { PizzaOrder } from "../../../client/types/ProductOrder";
 import { IconButton } from "../../Buttons/IconButton";
+import { CounterInput } from "../../Inputs/CounterInput";
+import { CartStoreOrder } from "../CartContext";
+import { useOrders } from "../hooks/OrderHook";
 
 import "./PizzaCart.sass"
 
 export type PizzaCartProps = {
-    order: PizzaOrder<Product>
+    idx: number;
+    order: CartStoreOrder;
 }
 
-export const PizzaCart: React.FC<PizzaCartProps> = ({ order }) => {
+export const PizzaCart: React.FC<PizzaCartProps> = ({ idx, order: { order, storeId, type, quantity, price } }) => {
+
+    const orders = useOrders();
 
     const formatPizzaName = () => {
 
@@ -30,12 +34,17 @@ export const PizzaCart: React.FC<PizzaCartProps> = ({ order }) => {
 
     return (
         <div className="PizzaCart">
-            <div className="PizzaCart-title">Pizza { `${order.tamanho.name} - R$ ${25} ` }</div>
+            <div className="PizzaCart-title">Pizza { `${order.tamanho.name} - R$ ${price} ` }</div>
             <div className="PizzaCart-details">
-                <div>{ formatPizzaName() }</div>
+                <div>
+                    { formatPizzaName() }
+                    <CounterInput min={ 1 } onChange={ value => orders.updateQuantity(idx, value) }/>
+                </div>
                 <div className="PizzaCart-options">
-                    <IconButton icon={ "trash" } size={ 32 } />
-                    Remover
+                    <div className="PizzaCart-option">
+                        <IconButton icon={ "trash" } size={ 32 } />
+                        Remover
+                    </div>
                 </div>
             </div>
         </div>

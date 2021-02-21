@@ -1,9 +1,8 @@
 import React from "react";
-import { CartStoreOrder } from "./CartContext";
-import { PizzaCart } from "./Orders/PizzaCart";
+import { CartStoreOrder } from "../CartContext";
 
 import "./CartOrders.sass";
-import { OrderCart } from "./Orders/OrderCart";
+import { OrderCart } from "./OrderCart";
 
 export type CartOrdersProps = {
     orders: CartStoreOrder[];
@@ -15,7 +14,7 @@ export const CartOrders: React.FC<CartOrdersProps> = ({ orders }) => {
         return orders.map((order, idx) => {
             return (
             <div key={idx} className="CartOrders-element">
-                <OrderCart order={ order } />
+                <OrderCart idx={idx} order={ order } />
             </div>
             );
         });

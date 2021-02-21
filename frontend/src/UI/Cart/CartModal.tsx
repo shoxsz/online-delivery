@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Modal } from "../Modal/Modal";
 import { Cart } from "./CartContext";
-import { CartOrders } from "./CartOrders";
+import { CartOrders } from "./Orders/CartOrders";
 import { EmptyCart } from "./EmptyCart";
 
 export type CartModalProps = {

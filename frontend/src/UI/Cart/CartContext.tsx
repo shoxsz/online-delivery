@@ -8,13 +8,15 @@ export type CartStoreOrder = {
     type: "pizza" | "drinks",
     storeId: string,
     order: CartOrder,
-    repeat?: number
+    quantity: number,
+    price: number
 };
 
 export type CartContext = {
     orders: CartStoreOrder[];
     addOrder: (order: CartStoreOrder) => void;
     removeOrder: (idx: number) => void;
+    updateOrder: (idx: number, order: Partial<CartStoreOrder>) => void;
 };
 
 export const Cart = React.createContext<CartContext | undefined>(undefined);
@@ -28,7 +30,16 @@ export const CartContext: React.FC = ({ children }) => {
     }
 
     const removeOrder = (idx: number) => {
-        setOrders(orders.splice(idx, 1));
+        orders.splice(idx, 1);
+        setOrders([...orders]);
+    }
+
+    const updateOrder = (idx: number, order: Partial<CartStoreOrder>) => {
+        const oldOrder = orders[idx];
+
+        orders[idx] = { ...oldOrder, ...order };
+
+        setOrders([...orders]);
     }
 
     return (
@@ -36,7 +47,8 @@ export const CartContext: React.FC = ({ children }) => {
             {
                 orders,
                 addOrder,
-                removeOrder
+                removeOrder,
+                updateOrder
             }
         }>
             {children}
