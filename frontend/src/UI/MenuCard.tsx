@@ -7,7 +7,7 @@ import { BordasSection } from './Sections/BordasSection';
 
 import "./MenuCard.sass"
 import { PizzaOrder } from '../client/types/ProductOrder';
-import { useCart } from './Cart/hooks/useCart';
+import { useCart } from './Cart/Hooks/useCart';
 
 export type MenuCardProps = {
     products: Product[]

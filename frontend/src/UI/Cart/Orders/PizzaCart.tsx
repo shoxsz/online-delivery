@@ -2,7 +2,7 @@ import React from "react";
 import { IconButton } from "../../Buttons/IconButton";
 import { CounterInput } from "../../Inputs/CounterInput";
 import { CartStoreOrder } from "../CartContext";
-import { useCart } from "../hooks/useCart";
+import { useCart } from "../Hooks/useCart";
 
 import "./PizzaCart.sass"
 

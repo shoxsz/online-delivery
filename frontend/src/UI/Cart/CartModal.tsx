@@ -4,7 +4,7 @@ import { CartOrders } from "./Orders/CartOrders";
 import { EmptyCart } from "./EmptyCart";
 
 import "./CartModal.sass"
-import { useCart } from "./hooks/useCart";
+import { useCart } from "./Hooks/useCart";
 
 export type CartModalProps = {
     show: boolean;
