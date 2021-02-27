@@ -1,4 +1,6 @@
 import React from "react";
+import { useApp } from "../../App/useApp";
+import { Checkout } from "../Checkout";
 import { Icon } from "../Icons/Icon";
 import { Modal } from "../Modal/Modal";
 
@@ -11,8 +13,10 @@ export type PurchaseModalProps = {
 
 export const PurchaseModal: React.FC<PurchaseModalProps> = ({ show, onClose }) => {
 
-    const selectCreditCard = () => {
+    const app = useApp();
 
+    const selectCreditCard = () => {
+        app.pushScreen?.(Checkout);
     }
 
     const selectPicPay = () => {
