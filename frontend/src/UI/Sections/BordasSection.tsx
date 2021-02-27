@@ -24,7 +24,7 @@ export const BordasSection: React.FC<BordasSectionProps> = ({ bordas, onSelect }
     const renderBordas = () => {
         return bordas.map((borda, idx) => {
             return (
-                <div onClick={ e => handleClick(idx) } key={ borda.name }>
+                <div onClick={ e => handleClick(idx) } key={ borda.id }>
                     <MenuBorda product={ borda } selected={ idx === selected } />
                 </div>
             );

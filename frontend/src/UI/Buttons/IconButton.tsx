@@ -9,8 +9,8 @@ export type IconButtonProps = {
     bgColor?: string;
     color?: string;
     margin?: string
-    onClick?: MouseEventHandler
-    hover?: boolean
+    onClick?: MouseEventHandler;
+    hover?: boolean;
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({ icon, size = 32, bgColor, color, margin, onClick, hover = true }) => {
@@ -27,7 +27,7 @@ export const IconButton: React.FC<IconButtonProps> = ({ icon, size = 32, bgColor
 
         return style;
 
-    }, [icon, size, color, margin, hover]);
+    }, [bgColor, size, margin, hover]);
 
     return (
         <div className="IconButton" style={ createStyle() } onClick={ onClick }>

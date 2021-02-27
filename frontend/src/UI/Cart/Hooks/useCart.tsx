@@ -33,7 +33,7 @@ export const useCart = () => {
         removeOrder,
         updateQuantity,
         calculateTotal,
-        orders: cart?.orders
+        orders: cart?.orders || []
     };
 
 }

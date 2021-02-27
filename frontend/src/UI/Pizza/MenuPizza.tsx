@@ -1,7 +1,6 @@
 import React from "react";
-import { Product, ProductVariation } from "../../client/types/Product";
+import { Product } from "../../client/types/Product";
 import { CollapseButton } from "../Buttons/CollapseButton";
-import { Icon } from "../Icons/Icon";
 import { Ingredients } from "./Ingredients";
 
 import "./MenuPizza.sass"
