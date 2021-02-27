@@ -6,12 +6,13 @@ import "./PizzaSection.sass"
 
 export type PizzaSectionProps = {
     pizzas: Product[];
-    onSelect: (flavor1?: Product, flavor2?: Product) => void;
+    initialFlavor1?: number;
+    onSelect: (flavor1: Product, flavor2?: Product) => void;
 }
 
-export const PizzaSection: React.FunctionComponent<PizzaSectionProps> = ({ pizzas, onSelect }) => {
+export const PizzaSection: React.FunctionComponent<PizzaSectionProps> = ({ pizzas, initialFlavor1 = 0, onSelect }) => {
 
-    const [selectedPizza1, setSelectedPizza1] = React.useState<Product | undefined>(pizzas[0]);
+    const [selectedPizza1, setSelectedPizza1] = React.useState<Product>(pizzas[initialFlavor1]);
     const [selectedPizza2, setSelectedPizza2] = React.useState<Product>();
 
     React.useEffect(() => {
@@ -21,35 +22,21 @@ export const PizzaSection: React.FunctionComponent<PizzaSectionProps> = ({ pizza
     const renderPizza = (pizza: Product) => {
         return (
             <div className="PizzaSection-item" key={ pizza.name } onClick={ e => handlePizzaClick(pizza) }>
-                <MenuPizza product={ pizza } selected={ pizza.name == selectedPizza1?.name || pizza.name == selectedPizza2?.name } />
+                <MenuPizza product={ pizza } selected={ pizza.id == selectedPizza1.id || pizza.id == selectedPizza2?.id } />
             </div>
         );
     }
 
     const handlePizzaClick = React.useCallback((pizza: Product) => {
-
-        if(!selectedPizza1 && !selectedPizza2) {
-            setSelectedPizza1(pizza);
-        }
-        else if(selectedPizza1 && !selectedPizza2) {
-            if(selectedPizza1.name == pizza.name) {
-                setSelectedPizza1(undefined);
-            } else {
+        if(selectedPizza1 && !selectedPizza2) {
+            if(selectedPizza1.id != pizza.id) {
                 setSelectedPizza2(pizza);
             }
-        } else if(selectedPizza2 && !selectedPizza1) {
-            if(selectedPizza2.name == pizza.name) {
+        } else if(selectedPizza2) {
+            if(selectedPizza2.id == pizza.id) {
                 setSelectedPizza2(undefined);
             } else {
                 setSelectedPizza1(pizza);
-            }
-        } else {
-            if(selectedPizza2?.name == pizza.name) {
-                setSelectedPizza2(undefined);
-            } else if(selectedPizza1?.name == pizza.name) {
-                setSelectedPizza1(undefined);
-            } else {
-                setSelectedPizza2(pizza);
             }
         }
 

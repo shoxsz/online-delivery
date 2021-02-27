@@ -17,14 +17,14 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
 
     const cart = useCart();
 
+    const [loaded, setLoaded] = React.useState(false);
     const [pizzas, setPizzas] = React.useState<any[]>([]);
     const [borders, setBorders] = React.useState<any[]>([]);
     const [tamanhos, setTamanhos] = React.useState<any[]>([]);
 
-    const [order, setPizzaOrder] = React.useState<Partial<PizzaOrder<Product>>>({});
+    const [order, setPizzaOrder] = React.useState<PizzaOrder<Product>>();
 
     React.useEffect(() => {
-
         const pizzas = products.filter(product => product.tags.includes("pizza"));
         const borders = products.filter(product => product.tags.includes("borda"));
         const tamanhos = products.filter(product => product.tags.includes("tamanho"));
@@ -33,15 +33,27 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
         setBorders(borders);
         setTamanhos(tamanhos);
 
+        setPizzaOrder({
+            flavor1: pizzas[0],
+            tamanho: tamanhos[0]
+        });
+
+        setLoaded(true);
+
     }, [products]);
 
     const addToCart = () => {
+
+        if(!order) {
+            return;
+        }
+
         cart.addOrder({
             order: {
-                flavor1: order.flavor1 as Product,
-                flavor2: order.flavor2 as Product,
-                border: order.border as Product,
-                tamanho: order.tamanho as Product,
+                flavor1: order.flavor1,
+                flavor2: order.flavor2,
+                border: order.border,
+                tamanho: order.tamanho,
             },
             storeId: "123",
             type: "pizza",
@@ -53,15 +65,19 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
         addToCart();
     }
 
+    if(!loaded) {
+        return null;
+    }
+
     return (
         <div className="MenuCard">
             <h1>Monte a sua pizza(s)!</h1>
             <h3>Escolha o tamanho da sua pizza!</h3>
-            <TamanhoSection tamanhos={ tamanhos } onSelect={ tamanho => setPizzaOrder({ ...order, tamanho }) }/>
+            <TamanhoSection initial={0} tamanhos={ tamanhos } onSelect={ tamanho => order && setPizzaOrder({ ...order, tamanho }) }/>
             <h3>Escolha até dois sabores!</h3>
-            <PizzaSection pizzas={ pizzas } onSelect={ (flavor1, flavor2) => setPizzaOrder({ ...order, flavor1, flavor2 }) } />
+            <PizzaSection pizzas={ pizzas } onSelect={ (flavor1, flavor2) => order && setPizzaOrder({ ...order, flavor1, flavor2 }) } />
             <h3>Bordas!</h3>
-            <BordasSection bordas={ borders } onSelect={ border => setPizzaOrder({ ...order, border }) } />
+            <BordasSection bordas={ borders } onSelect={ border => order && setPizzaOrder({ ...order, border }) } />
             <div className="MenuCard-buttons">
                 <IconButton margin="2px" icon="addCart" size={32} bgColor="#77dd77" onClick={ addToCart } />
                 <IconButton margin="2px" icon="fastCart" size={32} bgColor="#e4cd05" onClick={ finish } />

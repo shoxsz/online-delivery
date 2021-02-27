@@ -15,10 +15,7 @@ export const PizzaCart: React.FC<PizzaCartProps> = ({ idx, order: { order, store
 
     const cart = useCart();
 
-    console.log("Order", order);
-
     const formatPizzaName = () => {
-
         let name = "";
 
         if(order.flavor2) {
@@ -29,9 +26,7 @@ export const PizzaCart: React.FC<PizzaCartProps> = ({ idx, order: { order, store
 
         name += ", " + (order.border?.name || "sem borda");
 
-
         return name;
-
     }
 
     return (
