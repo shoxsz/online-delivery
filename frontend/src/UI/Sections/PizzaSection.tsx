@@ -21,7 +21,7 @@ export const PizzaSection: React.FunctionComponent<PizzaSectionProps> = ({ pizza
 
     const renderPizza = (pizza: Product) => {
         return (
-            <div className="PizzaSection-item" key={ pizza.name } onClick={ e => handlePizzaClick(pizza) }>
+            <div className="PizzaSection-item" key={ pizza.id } onClick={ e => handlePizzaClick(pizza) }>
                 <MenuPizza product={ pizza } selected={ pizza.id == selectedPizza1.id || pizza.id == selectedPizza2?.id } />
             </div>
         );

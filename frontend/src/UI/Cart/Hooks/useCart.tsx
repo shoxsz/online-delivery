@@ -7,7 +7,6 @@ export const useCart = () => {
     const cart = React.useContext(Cart);
 
     const addOrder = (order: Partial<CartStoreOrder>) => {
-
         const priceOrder: any = {
             ...order,
             id: v4(),
@@ -15,7 +14,6 @@ export const useCart = () => {
         };
 
         cart?.addOrder(priceOrder);
-
     }
 
     const updateQuantity = (orderId: number, quantity: number) => {

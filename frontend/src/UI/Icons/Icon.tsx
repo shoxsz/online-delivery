@@ -4,6 +4,7 @@ import { ReactComponent as Trash } from "./svg/trash.svg";
 import { ReactComponent as AddCart } from "./svg/add-cart.svg";
 import { ReactComponent as FastCart } from "./svg/fast-cart.svg";
 import { ReactComponent as Cart } from "./svg/cart.svg";
+import { ReactComponent as Arrow } from "./svg/arrow.svg";
 
 type ReactSVG = React.FunctionComponent<React.SVGProps<SVGSVGElement> & { title?: string }>;
 
@@ -12,13 +13,15 @@ export type ICONS_TYPE = {
     addCart: ReactSVG;
     fastCart: ReactSVG;
     cart: ReactSVG;
+    arrow: ReactSVG;
 }
 
 export const ICONS: ICONS_TYPE = {
     trash: Trash,
     addCart: AddCart,
     fastCart: FastCart,
-    cart: Cart
+    cart: Cart,
+    arrow: Arrow
 };
 
 export type IconProps = {
