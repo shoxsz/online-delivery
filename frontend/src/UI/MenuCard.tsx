@@ -8,6 +8,7 @@ import { BordasSection } from './Sections/BordasSection';
 import "./MenuCard.sass"
 import { PizzaOrder } from '../client/types/ProductOrder';
 import { useCart } from './Cart/Hooks/useCart';
+import { PurchaseButton } from './Purchase/PurchaseButton';
 
 export type MenuCardProps = {
     products: Product[]
@@ -18,16 +19,11 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
     const cart = useCart();
 
     const [loaded, setLoaded] = React.useState(false);
-    const [canPurchase, setCanPurchase] = React.useState(false);
     const [pizzas, setPizzas] = React.useState<any[]>([]);
     const [borders, setBorders] = React.useState<any[]>([]);
     const [tamanhos, setTamanhos] = React.useState<any[]>([]);
 
     const [order, setPizzaOrder] = React.useState<PizzaOrder<Product>>();
-
-    React.useEffect(() => {
-        setCanPurchase(cart.orders.length > 0);
-    }, [cart.orders]);
 
     React.useEffect(() => {
         const pizzas = products.filter(product => product.tags.includes("pizza"));
@@ -66,12 +62,6 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
         });
     }
 
-    const finish = () => {
-        if(canPurchase) {
-            
-        }
-    }
-
     if(!loaded) {
         return null;
     }
@@ -87,7 +77,7 @@ export const MenuCard: React.FunctionComponent<MenuCardProps> = ({ products }) =
             <BordasSection bordas={ borders } onSelect={ border => order && setPizzaOrder({ ...order, border }) } />
             <div className="MenuCard-buttons">
                 <IconButton margin="2px" icon="addCart" size={32} bgColor="#77dd77" onClick={ addToCart } />
-                <IconButton margin="2px" icon="fastCart" size={32} bgColor={ canPurchase ? "#e4cd05" : "#fefefe" } onClick={ finish } />
+                <PurchaseButton/>
             </div>
         </div>
     );

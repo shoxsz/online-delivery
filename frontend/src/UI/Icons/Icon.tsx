@@ -5,6 +5,8 @@ import { ReactComponent as AddCart } from "./svg/add-cart.svg";
 import { ReactComponent as FastCart } from "./svg/fast-cart.svg";
 import { ReactComponent as Cart } from "./svg/cart.svg";
 import { ReactComponent as Arrow } from "./svg/arrow.svg";
+import { ReactComponent as CreditCard } from "./svg/credit-card.svg";
+import { ReactComponent as PicPay } from "./svg/picpay-logo.svg";
 
 type ReactSVG = React.FunctionComponent<React.SVGProps<SVGSVGElement> & { title?: string }>;
 
@@ -14,6 +16,8 @@ export type ICONS_TYPE = {
     fastCart: ReactSVG;
     cart: ReactSVG;
     arrow: ReactSVG;
+    creditCard: ReactSVG;
+    picpay: ReactSVG;
 }
 
 export const ICONS: ICONS_TYPE = {
@@ -21,7 +25,9 @@ export const ICONS: ICONS_TYPE = {
     addCart: AddCart,
     fastCart: FastCart,
     cart: Cart,
-    arrow: Arrow
+    arrow: Arrow,
+    creditCard: CreditCard,
+    picpay: PicPay
 };
 
 export type IconProps = {
