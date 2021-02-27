@@ -21,6 +21,17 @@ export const AppContext: React.FC<AppContextProps> = ({ main }) => {
     const [history, setHistory] = React.useState<Screen[]>([main]);
     const [current, setCurrent] = React.useState<Screen>(main);
 
+    React.useEffect(() => {
+        window.onpopstate = (e) => {
+            popScreen();
+        }
+
+        window.onkeydown = (e: KeyboardEvent) => {
+            e.key == "Backspace" && popScreen();
+        }
+
+    }, [history]);
+
     const pushScreen = (component: React.FC<any>, ...args: any[]) => {
         const screen: Screen = {
             component,
@@ -29,9 +40,12 @@ export const AppContext: React.FC<AppContextProps> = ({ main }) => {
 
         setHistory([...history, screen]);
         setCurrent(screen);
+        window.history.pushState({}, "");
     }
 
     const popScreen = () => {
+        if(history.length == 0) return;
+
         history.pop();
 
         const current = history[history.length - 1];
