@@ -1,4 +1,3 @@
-import { promises } from "fs";
 import React from "react";
 
 export const usePagScript = () => {

@@ -1,6 +1,5 @@
 import React from "react";
-import { TextField } from "../../Form/TextField";
-import { CostumerForm } from "../Form/CostumerForm";
+import { PagSeguroForm } from "./PagSeguroForm";
 import { usePagScript } from "./usePagScript";
 
 export type PagSeguroProps = {
@@ -27,7 +26,7 @@ export const PagSeguro: React.FC<PagSeguroProps> = () => {
 
     return (
         <div className="PagSeguro">
-            <CostumerForm/>
+            <PagSeguroForm/>
         </div>
     );
 

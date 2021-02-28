@@ -1,6 +1,5 @@
 import React from "react";
-import { CollapseButton } from "../../Buttons/CollapseButton";
-import { CartOrders } from "../../Cart/Orders/CartOrders";
+import { Button } from "../../Form/Button";
 import { AddressForm } from "./AddressForm";
 import { CardForm } from "./CardForm";
 import { CostumerCart } from "./CostumerCart";
@@ -19,6 +18,9 @@ export const CostumerForm: React.FC<CostumerFormProps> = ({  }) => {
                 <PersonalForm/>
                 <AddressForm/>
                 <CardForm/>
+                <Button onClick={ e => e.preventDefault() }>
+                    Confirmar compra
+                </Button>
             </form>
         </div>
     );
