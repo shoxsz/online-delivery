@@ -8,8 +8,8 @@ import { Checkout } from "./UI/Chekout/Checkout";
 const Menu = () => (
   <>
     <CartButton/>
-    {/* <MenuCard products={ Products } /> */}
-    <Checkout/>
+    <MenuCard products={ Products } />
+    {/* <Checkout/> */}
   </>
 )
 

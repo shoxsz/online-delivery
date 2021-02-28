@@ -1,17 +1,19 @@
 import React from "react";
 import { CartStoreOrder } from "../CartContext";
+import { useCart } from "../Hooks/useCart";
 
 import "./CartOrders.sass";
 import { OrderCart } from "./OrderCart";
 
 export type CartOrdersProps = {
-    orders: CartStoreOrder[];
 }
 
-export const CartOrders: React.FC<CartOrdersProps> = ({ orders }) => {
+export const CartOrders: React.FC<CartOrdersProps> = ({ }) => {
+
+    const cart = useCart();
 
     const renderOrders = () => {
-        return orders.map((order, idx) => {
+        return cart.orders.map((order, idx) => {
             return (
             <div key={order.id} className="CartOrders-element">
                 <OrderCart idx={idx} order={ order } />

@@ -21,7 +21,7 @@ export const CartModal: React.FC<CartModalProps> = ({ show, onClose }) => {
                 <div className="CartModal-title">Meus Pedidos</div>
                 <div className="CartModal-orders">
                 {
-                    !!cart.orders?.length && <CartOrders orders={ cart.orders } />
+                    !!cart.orders?.length && <CartOrders/>
                 }
                 {
                     !cart.orders?.length && <EmptyCart/>
