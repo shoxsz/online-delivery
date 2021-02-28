@@ -3,7 +3,7 @@ import { CartButton } from "./UI/Cart/CartButton";
 import { CartContext } from "./UI/Cart/CartContext";
 import { MenuCard } from "./UI/MenuCard";
 import { AppContext } from "./App/AppContext";
-import { Checkout } from "./UI/Checkout";
+import { Checkout } from "./UI/Chekout/Checkout";
 
 const Menu = () => (
   <>

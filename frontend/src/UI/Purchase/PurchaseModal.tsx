@@ -1,6 +1,6 @@
 import React from "react";
 import { useApp } from "../../App/useApp";
-import { Checkout } from "../Checkout";
+import { Checkout } from "../Chekout/Checkout";
 import { Icon } from "../Icons/Icon";
 import { Modal } from "../Modal/Modal";
 
