@@ -8,24 +8,22 @@ export class PagSeguro {
 
     @GET("/sessions")
     async getSessionID() {
-
         const session = await this.getSession();
         const sessionID = this.extractSessionFromXML(session);
 
         return {
             sessionID
         };
-        
     }
 
     private async getSession() {
         try {
             const params = new URLSearchParams()
-            params.append('email', 'paulomarcio18p1@gmail.com');
-            params.append('token', "5E2E7BF411C846568C10E353338D1566");
+            params.append('email', process.env.PAGSEGURO_EMAIL);
+            params.append('token', process.env.PAGSEGURO_TOKEN);
 
             const result = await axios.default.post(
-                "https://ws.sandbox.pagseguro.uol.com.br/v2/sessions",
+                process.env.PAGSEGURO_SESSION_ENDPOINT,
                 params,
                 {
                     headers: {
@@ -44,11 +42,13 @@ export class PagSeguro {
     private extractSessionFromXML(xml: string) {
         const startID = xml.indexOf("<id>") + 4;
         if(startID == -1) {
+            //log this
             throw new InternalServerError();
         }
 
         const endID = xml.indexOf("</id>", startID);
         if(endID == -2) {
+            //log this
             throw new InternalServerError();
         }
 

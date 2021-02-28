@@ -1,3 +1,4 @@
+import "./env";
 import { Express } from "./http/express/Express";
 import { HttpApp } from "./http/HttpApp";
 import { InitializeMock } from "./mock/initmock";
