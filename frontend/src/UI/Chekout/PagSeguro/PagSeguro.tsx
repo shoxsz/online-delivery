@@ -1,4 +1,5 @@
 import React from "react";
+import { PagSeguroContext } from "./PagSeguroContext";
 import { PagSeguroForm } from "./PagSeguroForm";
 import { usePagScript } from "./usePagScript";
 
@@ -25,9 +26,11 @@ export const PagSeguro: React.FC<PagSeguroProps> = () => {
     }, []);
 
     return (
-        <div className="PagSeguro">
-            <PagSeguroForm/>
-        </div>
+        <PagSeguroContext>
+            <div className="PagSeguro">
+                <PagSeguroForm/>
+            </div>
+        </PagSeguroContext>
     );
 
 }

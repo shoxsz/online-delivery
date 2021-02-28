@@ -5,3 +5,5 @@ db
 backend/images
 
 .env
+.env.dev
+.env.production

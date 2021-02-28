@@ -1,4 +1,5 @@
 import React from "react";
+import { PagSeguroAPI } from "../../../client/API/PagSeguro";
 
 export type PagSeguroData = {
     initSession: () => Promise<string>;
@@ -12,11 +13,13 @@ export const PagSeguroContext = ({ children }) => {
     const [sessionID, setSessionID] = React.useState<string>();
 
     const initSession = async () => {
-        return "";
+        const result = await PagSeguroAPI.getSessionID();
+        setSessionID(result.sessionID);
+        return result.sessionID;
     }
 
     const getSessionID = () => {
-        return "";
+        return sessionID;
     }
 
     return (
