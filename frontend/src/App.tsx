@@ -3,19 +3,21 @@ import { CartButton } from "./UI/Cart/CartButton";
 import { CartContext } from "./UI/Cart/CartContext";
 import { MenuCard } from "./UI/MenuCard";
 import { AppContext } from "./App/AppContext";
+import { Checkout } from "./UI/Checkout";
 
 const Menu = () => (
-    <CartContext>
-        <CartButton/>
-        <MenuCard products={ Products } />
-    </CartContext>
+  <>
+    <CartButton/>
+    {/* <MenuCard products={ Products } /> */}
+    <Checkout/>
+  </>
 )
 
 function App() {
   return (
-    <div>
+    <CartContext>
       <AppContext main={ { component: Menu, args: [] } } />
-    </div>
+    </CartContext>
   );
 }
 

@@ -22,7 +22,7 @@ export const AppContext: React.FC<AppContextProps> = ({ main }) => {
     const [current, setCurrent] = React.useState<Screen>(main);
 
     React.useEffect(() => {
-        window.onpopstate = (e) => {
+        window.onpopstate = (e: PopStateEvent) => {
             popScreen();
         }
 
@@ -44,7 +44,7 @@ export const AppContext: React.FC<AppContextProps> = ({ main }) => {
     }
 
     const popScreen = () => {
-        if(history.length == 0) return;
+        if(history.length < 2) return;
 
         history.pop();
 
