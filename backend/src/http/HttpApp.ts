@@ -15,6 +15,7 @@ import { StoreController } from "./controllers/StoreController";
 import { ProductController } from "./controllers/ProductController";
 import { ImageController } from "./controllers/ImageController";
 import { OrderController } from "./controllers/OrderController";
+import { PagSeguro } from "./controllers/PagSeguro";
 
 export class HttpApp implements App {
 
@@ -34,6 +35,7 @@ export class HttpApp implements App {
         this.controllers.push(new ProductController() as any);
         this.controllers.push(new ImageController() as any);
         this.controllers.push(new OrderController() as any);
+        this.controllers.push(new PagSeguro() as any);
 
         console.log("Initializing HTTP Framework");
         await this.framework.initFramework();
