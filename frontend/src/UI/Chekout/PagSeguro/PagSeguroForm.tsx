@@ -1,18 +1,26 @@
 import React from "react";
-import { PagSeguroAPI } from "../../../client/API/PagSeguro";
 import { CostumerForm } from "../Form/CostumerForm";
+import { CostumerFormData } from "../Form/CostumerFormData";
 import { pagContext } from "./PagSeguroContext";
 
 export const PagSeguroForm: React.FC = () => {
 
-    const pag = React.useContext(pagContext);
+    const handleChange = (costumer: Partial<CostumerFormData>) => {
 
-    React.useEffect(() => {
-        pag?.initSession()
-        .then(async sessionID => {});
-    }, []);
+    }
+
+    const validate = (costumer: Partial<CostumerFormData>) => {
+        return {};
+    }
+
+    const submitForm = (costumer: Partial<CostumerFormData>) => {
+
+    }
 
     return (
-        <CostumerForm/>
+        <CostumerForm
+            onChange={handleChange}
+            validate={validate}
+            onSubmit={submitForm}/> 
     );
 }

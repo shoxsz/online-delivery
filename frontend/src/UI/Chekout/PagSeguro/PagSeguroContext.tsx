@@ -4,6 +4,7 @@ import { PagSeguroAPI } from "../../../client/API/PagSeguro";
 export type PagSeguroData = {
     initSession: () => Promise<string>;
     getSessionID: () => string | undefined;
+    hasSession: () => boolean;
 }
 
 export const pagContext = React.createContext<PagSeguroData | undefined>(undefined);
@@ -22,11 +23,16 @@ export const PagSeguroContext = ({ children }) => {
         return sessionID;
     }
 
+    const hasSession = () => {
+        return !!sessionID;
+    }
+
     return (
         <pagContext.Provider value={
             {
                 initSession,
-                getSessionID
+                getSessionID,
+                hasSession
             }
         }>
             {children}

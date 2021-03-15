@@ -25,9 +25,14 @@ export const usePagScript = () => {
         }
     }
 
+    const isLoaded = () => {
+        return !!script;
+    }
+
     return {
         loadPagSeguro,
-        unloadPagSeguro
+        unloadPagSeguro,
+        isLoaded
     }
 
 }
